@@ -9,6 +9,6 @@ class AboutUsContent extends StatefulWidget{
 class _AboutUsContent extends State<AboutUsContent> {
     @override
     Widget build(BuildContext context) {
-     	return Text('About Us');
+     	return Text('About Us page');
     }
 }
