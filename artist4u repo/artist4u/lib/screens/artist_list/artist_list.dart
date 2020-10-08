@@ -58,7 +58,7 @@ class _ArtisListState extends State<ArtisList> {
 																width: MediaQuery.of(context).size.width*0.95,
 																height:MediaQuery.of(context).size.width*0.95,
 																// child: OnTapVideo(
-																// 	url: artistlist[index]['preview'],
+																// 	url:'https://192.168.0.104:3001/artisttype/VID-20200804-WA0013.mp4',
 																// ),
 																// actions: [
 																// 	FlatButton(

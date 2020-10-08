@@ -30,18 +30,14 @@ class _ArtistTypeState extends State<ArtistType> {
 							var data = snapshot.data.result[index];
 							var image = 'http://$ip:3000/${data.image.toString().replaceAll('\\','/')}';
 							// debugPrint('$index, $image');
-							return Card(
-								//color: Color.fromRGBO(86, 204, 242, 1),
-								shape: RoundedRectangleBorder(
-									borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.25),
-								),
-								elevation: 4,
-								margin:EdgeInsets.all(MediaQuery.of(context).size.width*0.01),
-								child:InkWell(
+							return Container(
+								margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.height*0.03,vertical: MediaQuery.of(context).size.height*0.006),
+								child: InkWell(
 									onTap: (){
 										Navigator.pushNamed(context, '/artistlist',arguments: {'title':data.artistType});
 									},
 									child: Container(
+										height: MediaQuery.of(context).size.height*0.11,
 										decoration: BoxDecoration(
 											gradient: LinearGradient(
 												colors: [
@@ -53,7 +49,7 @@ class _ArtistTypeState extends State<ArtistType> {
 													
 												],
 											),
-											borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width*0.25),
+											borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.03),
 										),
 										child: Row(
 											mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,8 +78,8 @@ class _ArtistTypeState extends State<ArtistType> {
 																		],
 																	),
 																	borderRadius: BorderRadius.only(
-																		topLeft: Radius.circular(MediaQuery.of(context).size.width*0.05),
-																		bottomLeft: Radius.circular(MediaQuery.of(context).size.width*0.05),
+																		topLeft: Radius.circular(MediaQuery.of(context).size.width*0.02),
+																		bottomLeft: Radius.circular(MediaQuery.of(context).size.width*0.02),
 																	),
 															),
 															width: MediaQuery.of(context).size.width,
@@ -91,7 +87,7 @@ class _ArtistTypeState extends State<ArtistType> {
 															child:Container(
 																//width: MediaQuery.of(context).size.width*0.2,
 																height: MediaQuery.of(context).size.width*001,
-																margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.1),
+																margin: EdgeInsets.only(left:MediaQuery.of(context).size.height*0.02),
 																alignment: Alignment.centerLeft,
 																child: Image.network('$image'),
 															)
@@ -120,7 +116,7 @@ class _ArtistTypeState extends State<ArtistType> {
 											],
 										),
 									),
-								)
+								),
 							);
 						}
 					);
