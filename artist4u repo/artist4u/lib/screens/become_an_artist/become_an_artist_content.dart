@@ -226,6 +226,7 @@ class _ArtistFormState extends State<ArtistForm> {
 	ArtistBioModal _artistBioModal;
 	var name=TextEditingController();
 	var artist_type=TextEditingController();
+  var experience = TextEditingController();
 	String gender='';
 	String dateofbirth;
 	var phonenumber=TextEditingController();
@@ -244,6 +245,9 @@ class _ArtistFormState extends State<ArtistForm> {
 	String unifiedprice;
 	var price=TextEditingController();
 	List<Map> dynamicprices=[];
+	var accountholdersname=TextEditingController();
+	var accountnumber=TextEditingController();
+	var IFSC=TextEditingController();
 	bool agreed=false;
 	// bool agreed;
 
@@ -316,6 +320,17 @@ class _ArtistFormState extends State<ArtistForm> {
 		{'name':'Classic','selected':false},
 		{'name':'Mentalist','selected':false},
 		{'name':'Classic','selected':false},
+	];
+
+	List selectedlanguage=[];
+	List<Map<String,dynamic>> typesoflanguages=[
+		{'name':'Hindi','selected':false},
+		{'name':'English','selected':false},
+		{'name':'Punjabi','selected':false},
+		{'name':'Gujrati','selected':false},
+		{'name':'Tamil','selected':false},
+		{'name':'Marathi','selected':false},
+		{'name':'Bhojpuri','selected':false},
 	];
 
 	List minhour=[1,2,3,4,5,6,7,8];
@@ -554,6 +569,41 @@ class _ArtistFormState extends State<ArtistForm> {
 						)
 					),
 					
+					SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+					Container(
+						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.04),
+						child: Text(
+							'experience',
+							style: TextStyle(
+								fontWeight: FontWeight.bold,
+								fontSize:MediaQuery.of(context).size.height*0.021,
+							),
+						)
+					),
+					Container(
+						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.1),
+						child: TextFormField(
+							controller: experience,
+							decoration: new InputDecoration(
+								// border: InputBorder.none,
+								// focusedBorder: InputBorder.none,
+								// enabledBorder: InputBorder.none,
+								// errorBorder: InputBorder.none,
+								// disabledBorder: InputBorder.none,
+								contentPadding:
+									EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+								hintText: 'experience'
+							),
+							validator: (value) {
+								if (value.isEmpty) {
+									return 'Please enter experience';
+								}
+								
+								return null;
+							},
+						),
+					),
+          
 					SizedBox(
 						height:MediaQuery.of(context).size.height*0.04 ,
 					),
@@ -947,6 +997,51 @@ class _ArtistFormState extends State<ArtistForm> {
 							],
 						),
 					),
+
+					Container(
+						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.04),
+						child: Text(
+							'Languages Preffered',
+							style: TextStyle(
+								fontWeight: FontWeight.bold,
+								fontSize:MediaQuery.of(context).size.height*0.021,
+							),
+						)
+					),
+					SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+					Container(
+						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.03),
+						child: Wrap(
+							children: [
+								for ( var index in typesoflanguages)
+									Padding(
+										padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.height*0.01,),
+										child: Column(
+											children: [
+											Text(index['name']),
+											Checkbox(
+											//title: Text(index['name']),
+												value: index['selected'],
+												onChanged: (bool value) {
+													setState(() { 
+														index['selected']=value; 
+														if(value==true){
+															selectedlanguage.add((index['name']));
+														}else{
+															selectedlanguage.remove((index['name']));
+														}
+													});
+													//debugPrint(selectedspecialization.toString());
+												},
+												//secondary: const Icon(Icons.hourglass_empty),
+											),
+										],
+									),
+								),
+							],
+						),
+					),
+
 					Row(
 						mainAxisAlignment: MainAxisAlignment.spaceBetween,
 						children: [
@@ -1173,6 +1268,86 @@ class _ArtistFormState extends State<ArtistForm> {
 							],
 						),
 					),
+					Container(
+						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.04),
+						child: Text(
+							'Account Details',
+							style: TextStyle(
+								fontWeight: FontWeight.bold,
+								fontSize:MediaQuery.of(context).size.height*0.021,
+							),
+						)
+					),
+					Container(
+						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.1),
+						child: TextFormField(
+							controller: accountholdersname,
+							decoration: new InputDecoration(
+								// border: InputBorder.none,
+								// focusedBorder: InputBorder.none,
+								// enabledBorder: InputBorder.none,
+								// errorBorder: InputBorder.none,
+								// disabledBorder: InputBorder.none,
+								contentPadding:
+									EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+								hintText: 'Account Holder\'s Name'
+							),
+							validator: (value) {
+								if (value.isEmpty) {
+									return 'Please enter Account Holder\'s Name';
+								}
+								
+								return null;
+							},
+						),
+					),
+					Container(
+						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.1),
+						child: TextFormField(
+							controller: accountnumber,
+							decoration: new InputDecoration(
+								// border: InputBorder.none,
+								// focusedBorder: InputBorder.none,
+								// enabledBorder: InputBorder.none,
+								// errorBorder: InputBorder.none,
+								// disabledBorder: InputBorder.none,
+								contentPadding:
+									EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+								hintText: 'Account Number'
+							),
+							validator: (value) {
+								if (value.isEmpty) {
+									return 'Please enter Account Number';
+								}
+								
+								return null;
+							},
+						),
+					),
+					Container(
+						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.02,right:MediaQuery.of(context).size.width*0.1),
+						child: TextFormField(
+							controller: IFSC,
+							decoration: new InputDecoration(
+								// border: InputBorder.none,
+								// focusedBorder: InputBorder.none,
+								// enabledBorder: InputBorder.none,
+								// errorBorder: InputBorder.none,
+								// disabledBorder: InputBorder.none,
+								contentPadding:
+									EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+								hintText: 'IFSC'
+							),
+							validator: (value) {
+								if (value.isEmpty) {
+									return 'Please enter IFSC';
+								}
+								
+								return null;
+							},
+						),
+					),
+
 					SizedBox(height: MediaQuery.of(context).size.height*0.04,),
 					Container(
 						margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.04),
@@ -1293,6 +1468,7 @@ class _ArtistFormState extends State<ArtistForm> {
 								final ArtistBioModal artistbio=await PostArtistBio().postArtistBio(
 									name.text,
 									artist_type.text,
+									experience.text,
 									gender,
 									dateofbirth,
 									phonenumber.text.toString(),
@@ -1303,6 +1479,7 @@ class _ArtistFormState extends State<ArtistForm> {
 									country.text,
 									selectedshow,
 									selectedspecialization,
+									selectedlanguage,
 									_minselected.toString(),
 									_maxselected.toString(),
 									description.text,
@@ -1311,6 +1488,9 @@ class _ArtistFormState extends State<ArtistForm> {
 									sameprice.toString(),
 									price.text.toString(),
 									dynamicprices,
+									accountholdersname.text,
+									accountnumber.text,
+									IFSC.text,
 									agreed.toString()
 								)
 								.then((ArtistBioModal value){

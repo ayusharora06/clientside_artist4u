@@ -31,7 +31,7 @@ class _ArtistTypeState extends State<ArtistType> {
 							var image = 'http://$ip:3000/${data.image.toString().replaceAll('\\','/')}';
 							// debugPrint('$index, $image');
 							return Container(
-								margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.height*0.03,vertical: MediaQuery.of(context).size.height*0.006),
+								margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.height*0.03,vertical: MediaQuery.of(context).size.height*0.007),
 								child: InkWell(
 									onTap: (){
 										Navigator.pushNamed(context, '/artistlist',arguments: {'title':data.artistType});

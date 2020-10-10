@@ -14,9 +14,11 @@ class GetArtistBioModal {
         this.typesofshow,
         this.specialization,
         this.differentprices,
+        this.languagepreffered,
         this.id,
         this.name,
         this.artistType,
+        this.experience,
         this.gender,
         this.dateofbirth,
         this.phonenumber,
@@ -35,6 +37,9 @@ class GetArtistBioModal {
         this.agreed,
         this.recommended,
         this.peopleschoice,
+        this.accountholdername,
+        this.accountnumber,
+        this.IFSC,
         this.v,
         this.profile,
         this.idproof,
@@ -44,9 +49,11 @@ class GetArtistBioModal {
     List<String> typesofshow;
     List<String> specialization;
     List<String> differentprices;
+    List<String> languagepreffered;
     String id;
     String name;
     String artistType;
+    String experience;
     String gender;
     String dateofbirth;
     String phonenumber;
@@ -65,6 +72,9 @@ class GetArtistBioModal {
     String agreed;
     String recommended;
     String peopleschoice;
+    String accountholdername;
+    String accountnumber;
+    String IFSC;
     int v;
     Idproof profile;
     Idproof idproof;
@@ -74,9 +84,11 @@ class GetArtistBioModal {
         typesofshow: List<String>.from(json["typesofshow"].map((x) => x)),
         specialization: List<String>.from(json["specialization"].map((x) => x)),
         differentprices: List<String>.from(json["differentprices"].map((x) => x)),
+        languagepreffered: List<String>.from(json["languagepreffered"].map((x) => x)),
         id: json["_id"],
         name: json["name"],
         artistType: json["artist_type"],
+        experience:json["experience"],
         gender: json["gender"],
         dateofbirth: json["dateofbirth"],
         phonenumber: json["phonenumber"],
@@ -95,6 +107,9 @@ class GetArtistBioModal {
         agreed: json["agreed"],
         recommended: json["recommended"],
         peopleschoice: json["peopleschoice"],
+        accountholdername:json['accountholdername'],
+        accountnumber:json['accountnumber'],
+        IFSC:json['IFSC'],
         v: json["__v"],
         profile: Idproof.fromJson(json["profile"]),
         idproof: Idproof.fromJson(json["idproof"]),
@@ -105,9 +120,11 @@ class GetArtistBioModal {
         "typesofshow": List<dynamic>.from(typesofshow.map((x) => x)),
         "specialization": List<dynamic>.from(specialization.map((x) => x)),
         "differentprices": List<dynamic>.from(differentprices.map((x) => x)),
+        "languagepreffered": List<dynamic>.from(languagepreffered.map((x) => x)),
         "_id": id,
         "name": name,
         "artist_type": artistType,
+        "experience":experience,
         "gender": gender,
         "dateofbirth": dateofbirth,
         "phonenumber": phonenumber,
@@ -126,6 +143,9 @@ class GetArtistBioModal {
         "agreed": agreed,
         "recommended": recommended,
         "peopleschoice": peopleschoice,
+        "accountholdername":accountholdername,
+        "accountnumber":accountnumber,
+        "IFSC":IFSC,
         "__v": v,
         "profile": profile.toJson(),
         "idproof": idproof.toJson(),

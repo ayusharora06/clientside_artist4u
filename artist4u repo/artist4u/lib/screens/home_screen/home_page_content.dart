@@ -14,7 +14,8 @@ class HomePageContent extends StatelessWidget{
 			headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
 				return <Widget>[
 					MyAppBar(this.title),
-					OfferCorouselSliver()
+					OfferCorouselSliver(),
+          FeatureSliverList()
 				];
 			},
 			body: ArtistType()

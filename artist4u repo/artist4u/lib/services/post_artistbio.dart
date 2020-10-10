@@ -10,6 +10,7 @@ class PostArtistBio{
 	Future<ArtistBioModal> postArtistBio(
 		String name,
 		String artist_type,
+    String experience,
 		String gender,
 		String dateofbirth,
 		String phonenumber,
@@ -20,6 +21,7 @@ class PostArtistBio{
 		String country,
 		List typesofshow,
 		List specialization,
+    List selectedlanguage,
 		String minhours,
 		String maxhours,
 		String description,
@@ -28,6 +30,9 @@ class PostArtistBio{
 		String unifiedprice,
 		String price,
 		List dynamicprices,
+    String accountholdersname,
+    String accountnumber,
+    String IFSC,
 		String agreed
 	) async{
 		var client = http.Client();
@@ -38,6 +43,7 @@ class PostArtistBio{
 			var response = await client.post(url,body:{
 				"name":name,
 				"artist_type":artist_type,
+        "experience":experience,
 				"gender":gender,
 				"dateofbirth":dateofbirth,
 				"phonenumber":phonenumber,
@@ -48,6 +54,7 @@ class PostArtistBio{
 				"country":country,
 				"typesofshow":json.encode(typesofshow),
 				"specialization": json.encode(specialization),
+        "languagepreffered":json.encode(selectedlanguage),
 				"minhours":minhours,
 				"maxhours":maxhours,
 				"description":description,
@@ -58,7 +65,10 @@ class PostArtistBio{
 				"differentprices":jsonEncode(dynamicprices),
 				"agreed":agreed,
 				"recommended":false.toString(),
-				"peopleschoice":0.toString()
+				"peopleschoice":0.toString(),
+        "accountholdername":accountholdersname,
+        "accountnumber":accountnumber,
+        "IFSC":IFSC
 			});
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);

@@ -6,7 +6,12 @@ final Map<String,dynamic> data={'name':'Shubham Khanduri','image':'shubham.jpg',
 String artistname;
 class ArtistBasicInfo extends StatelessWidget{
 	final String name;
-	ArtistBasicInfo(this.name){
+	String recommended;
+	String profile;
+	String duration;
+	String peopleschoice;
+  String experience;
+	ArtistBasicInfo({this.name,this.recommended,this.profile,this.duration,this.peopleschoice,this.experience}){
 		artistname=name;
 	}
 	@override
@@ -15,10 +20,10 @@ class ArtistBasicInfo extends StatelessWidget{
 		  	children: <Widget>[
 				Row(
 					children: <Widget>[
-						Expanded(flex:4,child: ArtistImage()),
-						Expanded(flex:2,child: Experience()),
-						Expanded(flex:2,child: Duration()),
-						Expanded(flex:2,child: PeoplesChoice())
+						ArtistImage(this.profile),
+						Expanded(flex:2,child: Experience(this.experience)),
+						Expanded(flex:2,child: Duration(this.duration)),
+						Expanded(flex:2,child: PeoplesChoice(this.peopleschoice))
 					],
 				),
 				Row(
@@ -29,7 +34,7 @@ class ArtistBasicInfo extends StatelessWidget{
 						child: Wrap(
 							children: <Widget>[
 								Text(
-									data['name'],
+									artistname,
 									style: TextStyle(
 										color: Colors.black,
 										fontWeight: FontWeight.w500,
@@ -38,7 +43,7 @@ class ArtistBasicInfo extends StatelessWidget{
 									),
 								),
 								//(width:MediaQuery.of(context).size.width*0.02),
-								data['recommended'] ==true ?
+								recommended =='true' ?
 								Align(
 									alignment: Alignment.centerLeft,
 									child: Card(
@@ -97,32 +102,32 @@ class ArtistBasicInfo extends StatelessWidget{
 
 }
 class ArtistImage extends StatelessWidget{
+	String profile;
+	ArtistImage(this.profile);
 	@override
 	Widget build(BuildContext context) {
+		// debugPrint('\n\n\nasdasd $profile asdasd\n\n\n');
 		return GestureDetector(
 			onTap: (){
 				showDialog(  
 					barrierDismissible: true,
 					context: context,  
 					builder: (BuildContext context) {  
-						return Card(
-							color: Colors.black,
-							// child: Container(  
-							// 	//title: Text("Selection Error"),
-							// 	// width: MediaQuery.of(context).size.width*0.95,
-							// 	// height:MediaQuery.of(context).size.width*0.95,
-							// 	child:Image.asset('artist_image/$artistname.jpg'),
-							// ),
-							// child:Image.asset('artist_image/$artistname.jpg'),
-						);  
+						return Container(
+							padding: EdgeInsets.symmetric(vertical:MediaQuery.of(context).size.height*0.25,horizontal: MediaQuery.of(context).size.height*0.05),
+							// width:MediaQuery.of(context).size.height*0.18,
+							// height:MediaQuery.of(context).size.height*0.18,
+							child:Image.network(profile,fit: BoxFit.fill,)
+						);
 					},  
 				);
 			},
 			child: Container(
-				width:MediaQuery.of(context).size.width*0.25,
+				width:MediaQuery.of(context).size.height*0.18,
+				height:MediaQuery.of(context).size.height*0.18,
 				child:ClipRRect(
 					borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width),
-						// child: Image.asset('artist_image/$artistname.jpg')
+						child: Image.network(profile,fit: BoxFit.fill,),
 				)
 			),
 		);
@@ -130,6 +135,8 @@ class ArtistImage extends StatelessWidget{
 
 }
 class Experience extends StatelessWidget{
+  String experience;
+  Experience(this.experience);
   @override
   	Widget build(BuildContext context) {
     	return Column(
@@ -151,8 +158,8 @@ class Experience extends StatelessWidget{
 						],
    					),
     				child: Center(
-    					child: data['expirience'] == null?Text('0'):Text(
-							'${data['expirience']['year']} yrs',
+    					child: Text(
+							'$experience',
 							style: TextStyle(
 								fontWeight: FontWeight.bold,
 								fontSize: MediaQuery.of(context).size.width*0.035,
@@ -177,6 +184,8 @@ class Experience extends StatelessWidget{
   	}
 }
 class Duration extends StatelessWidget{
+	String duration;
+	Duration(this.duration);
   @override
   	Widget build(BuildContext context) {
     	return Column(
@@ -199,7 +208,7 @@ class Duration extends StatelessWidget{
    					),
 					child:Center(
 						child: Text(
-							'3 hrs',
+							'${this.duration}',
 							style:TextStyle(
 								fontSize: MediaQuery.of(context).size.width*0.035,
 								fontWeight: FontWeight.bold,
@@ -222,9 +231,11 @@ class Duration extends StatelessWidget{
 }
 
 class PeoplesChoice extends StatelessWidget{
+	String peopleschoice;
+	PeoplesChoice(this.peopleschoice);
   @override
   	Widget build(BuildContext context) {
-   		return data['people choice'] !=false ? Column(
+   		return peopleschoice !='0' ? Column(
    			children:<Widget>[
    				Container(
    					width: MediaQuery.of(context).size.width*0.15,
@@ -245,7 +256,7 @@ class PeoplesChoice extends StatelessWidget{
    					child:Center(
    						child:Icon(
    							Icons.star,
-   							color: data['people choice'] =='1'? Colors.blue: data['people choice'] =='2' ? Colors.orange:
+   							color: peopleschoice =='1'? Colors.blue: peopleschoice =='2' ? Colors.orange:
    							Colors.yellow ,
    						),
    					)
@@ -262,6 +273,8 @@ class PeoplesChoice extends StatelessWidget{
   	}
 }
 class AboutArtist extends StatelessWidget{
+	String description;
+	AboutArtist(this.description);
   	@override
 	Widget build(BuildContext context) {
 		return 	Container(
@@ -298,7 +311,7 @@ class AboutArtist extends StatelessWidget{
 						),
 						children:<Widget>[
 							Text(
-								data['description'],
+								description,
 								textAlign: TextAlign.justify,
 								style: TextStyle(
 									fontFamily: 'SpecialElite-Regular',
@@ -315,6 +328,8 @@ class AboutArtist extends StatelessWidget{
 	}
 }
 class ComfortLanguage extends StatelessWidget{
+	List preferredlanguage;
+	ComfortLanguage({this.preferredlanguage});
   	@override
   	Widget build(BuildContext context) {
     	return Container(
@@ -359,7 +374,7 @@ class ComfortLanguage extends StatelessWidget{
     						alignment: AlignmentDirectional.centerStart,
     						child: Wrap(
     							children: <Widget>[
-    								for ( var i in data['comfort'] ) 
+    								for ( var i in preferredlanguage ) 
     									Padding(
     										padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.009),
     											child: Container(
@@ -408,8 +423,11 @@ class ComfortLanguage extends StatelessWidget{
   	}
 }
 class PreferredEvents extends StatelessWidget{
+	List preferredevents;
+	PreferredEvents({this.preferredevents});
   	@override
   	Widget build(BuildContext context) {
+		//   debugPrint(preferredevents.toString());
     	return Container(
 			padding:EdgeInsets.all(
 				(MediaQuery.of(context).size.width*0.05)
@@ -452,7 +470,7 @@ class PreferredEvents extends StatelessWidget{
     						alignment: AlignmentDirectional.centerStart,
     						child: Wrap(
     							children: <Widget>[
-    								for ( var i in data['event type'] ) 
+    								for ( var i in preferredevents ) 
     									Padding(
     										padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.009),
     											child: Container(
@@ -480,7 +498,88 @@ class PreferredEvents extends StatelessWidget{
     		);
   	}
 }
+
+class Specialization extends StatelessWidget{
+	List specialization;
+	Specialization({this.specialization});
+  	@override
+  	Widget build(BuildContext context) {
+    	return Container(
+			padding:EdgeInsets.all(
+				(MediaQuery.of(context).size.width*0.05)
+			),
+    		decoration: BoxDecoration(
+    			borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width*0.05)),
+    			border: Border.all(width: MediaQuery.of(context).size.width*0.002,color: Color.fromRGBO(104, 178, 160, 1)),
+    			color: Colors.white,
+    			boxShadow: [
+    				BoxShadow(
+    					color:Color.fromRGBO(48, 130, 146, 1),
+    					blurRadius: MediaQuery.of(context).size.width*0.002,
+    					spreadRadius: 0,
+    					offset: Offset( -MediaQuery.of(context).size.width*0.004, MediaQuery.of(context).size.width*0.004)
+    				)
+    			],
+    		),
+    		child: ConfigurableExpansionTile(
+    			initiallyExpanded: true,
+    			animatedWidgetFollowingHeader: const Icon(
+    			Icons.expand_more,
+    				color: Color(0xFF707070),
+    			),
+    			header: Text(
+    					'Specialization: ',
+    					// style: TextStyle(
+    					// 	color: Color.fromRGBO(2, 0, 110, 1),
+    					// 	fontWeight: FontWeight.bold,
+    					// 	fontSize: 15,
+    					// ),
+    					style: TextStyle(
+    						color: Colors.black,
+    						fontWeight: FontWeight.bold,
+    						fontSize: MediaQuery.of(context).size.width*0.05,
+    						fontFamily: 'SpecialElite-Regular',
+    					),
+    				),
+    				children: [
+    					Container(
+    						alignment: AlignmentDirectional.centerStart,
+    						child: Wrap(
+    							children: <Widget>[
+    								for ( var i in specialization ) 
+    									Padding(
+    										padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.009),
+    											child: Container(
+    												
+    												padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.01),
+    											decoration: BoxDecoration(
+    												borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width*0.1)),
+    												//border: Border.all(width: 1,color: Colors.black),
+													color: Colors.blueGrey.withOpacity(0.8),
+    											),
+    											child:Text(
+													' ${i.toString()} ',
+													style: TextStyle(
+														color: Colors.white,
+														fontSize: MediaQuery.of(context).size.width*0.036
+													),
+												)
+    										),
+    									)						
+    							],
+    						),
+    					),
+    				],
+    			),
+    		);
+  	}
+}
+
 class Price extends StatelessWidget{
+  String single='';
+  List multiple=[''];
+  String unifiedprice;
+  Price({this.single,this.multiple,this.unifiedprice});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -507,7 +606,7 @@ class Price extends StatelessWidget{
 				child: Align(
 					alignment: Alignment.bottomRight,
 					child: Text(
-						'(${data['min_price']} - ${data['max_price']})',
+						unifiedprice=='true'?single:multiple[0].toString(),
 						style: TextStyle(
 							color:Colors.black,
 							//fontWeight: FontWeight.bold,
