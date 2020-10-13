@@ -15,7 +15,7 @@ class FeatureSliverList extends StatelessWidget{
 				decoration: BoxDecoration(
 					borderRadius:BorderRadius.all(Radius.circular(MediaQuery.of(context).size.height*0.03)),
 					//border:Border.all(color:Colors.black)
-					color: Colors.grey.withOpacity(0.15)
+					// color: Colors.grey.withOpacity(0.15)
 				),
 				//color: Colors.cyanAccent,
 				height: MediaQuery.of(context).size.height*0.12,

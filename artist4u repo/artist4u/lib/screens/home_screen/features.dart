@@ -22,7 +22,7 @@ class FeatureList extends StatelessWidget{
   	@override
   	Widget build(BuildContext context) {
 		return Padding(
-			padding: EdgeInsets.symmetric(vertical:5),
+			padding: EdgeInsets.symmetric(vertical:5,horizontal:10),
 		  	child: Row(
 				children:<Widget>[
 					Expanded(
@@ -30,7 +30,7 @@ class FeatureList extends StatelessWidget{
 						child: Column(
 							children:<Widget>[
 								Expanded(
-									flex:8,
+									flex:4,
 									child:Container(
 										height: 0,
 										margin: EdgeInsets.only(left:10,right:10),
@@ -40,7 +40,7 @@ class FeatureList extends StatelessWidget{
 											// 	width: 1.5,
 											// 	color: Colors.blueGrey),
 											shape: BoxShape.circle,
-											image: DecorationImage(image:AssetImage('icons/${featurelist[0]}.png'))
+											image: DecorationImage(image:AssetImage('icons/${featurelist[0]}.png',))
 										),
 										width: MediaQuery.of(context).size.width*0.19,
 										//child: IconButton(icon: Icon(featurelist[item]), onPressed: () {  },),
@@ -71,7 +71,7 @@ class FeatureList extends StatelessWidget{
 						child: Column(
 							children:<Widget>[
 								Expanded(
-									flex:8,
+									flex:4,
 									child:Container(
 										height: 0,
 										margin: EdgeInsets.only(left:10,right:10),
@@ -112,7 +112,7 @@ class FeatureList extends StatelessWidget{
 						child: Column(
 							children:<Widget>[
 								Expanded(
-									flex:8,
+									flex:4,
 									child:Container(
 										height: 0,
 										margin: EdgeInsets.only(left:10,right:10),
