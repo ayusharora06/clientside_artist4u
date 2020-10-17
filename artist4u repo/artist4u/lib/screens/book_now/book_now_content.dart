@@ -1,9 +1,13 @@
+import 'package:artist4u/modals/post_event.dart';
+import 'package:artist4u/services/post_event.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class BookNowContent extends StatefulWidget{
 	final String artistname;
+	final String artisttype='actor';
 
 	BookNowContent(this.artistname);
 
@@ -26,6 +30,8 @@ class _BookNowContentState extends State<BookNowContent> {
 	];
 	var _selectedGathering;
 	var _currentSliderValue=0.0;
+	var requirements = TextEditingController();
+	var location = TextEditingController();
 	Widget build(BuildContext context) {
 		return Scaffold(
 			body: ListView(
@@ -434,7 +440,33 @@ class _BookNowContentState extends State<BookNowContent> {
 									],
 								
 							),
-							SpecialRequirements(),
+							Container(
+								margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*0.01),
+								child: TextField(
+									controller:location,
+									decoration: InputDecoration(
+										hintText: "Enter show address",
+										border: OutlineInputBorder(
+										borderRadius: BorderRadius.all(Radius.circular(10.0)),
+										borderSide: BorderSide(color: Colors.grey),
+										),
+									),
+								),
+							),
+							Container(
+								margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*0.01),
+								child: TextField(
+									controller:requirements,
+									maxLines: 10,
+									decoration: InputDecoration(
+										hintText: "Let artist know you special requirements",
+										border: OutlineInputBorder(
+										borderRadius: BorderRadius.all(Radius.circular(10.0)),
+										borderSide: BorderSide(color: Colors.grey),
+										),
+									),
+								),
+							),
 						],
 					),
 				]
@@ -479,40 +511,68 @@ class _BookNowContentState extends State<BookNowContent> {
 								height: MediaQuery.of(context).size.height*0.075,
 								minWidth: MediaQuery.of(context).size.width*0.4,
 								child: FlatButton(
-									onPressed: (){
-										showDialog(
-											barrierDismissible: true,
-											context: context,  
-											builder: (BuildContext context) {  
-												return AlertDialog(
-													content:Column(
-														children: [
-															Text('Confirm your Order'),
-															ArtistImage(widget.artistname),
-															Text(widget.artistname),
-															selectedevent!=null?Text(selectedevent):Text(''),
-															_selectedGathering!=null?Text(_selectedGathering):Text(''),
-															for(var i in eventsdate)
-																Container(
-																	child: Column(
-																		children: [
-																			Center(child: Text('Day '+i['day'].toString())),
+									// onPressed: (){
+									// 	showDialog(
+									// 		barrierDismissible: true,
+									// 		context: context,  
+									// 		builder: (BuildContext context) {  
+									// 			return AlertDialog(
+									// 				content:Column(
+									// 					children: [
+									// 						// Text('Confirm your Order'),
+									// 						// ArtistImage(widget.artistname),
+									// 						// Text(widget.artistname),
+									// 						// selectedevent!=null?Text(selectedevent):Text(''),
+									// 						// _selectedGathering!=null?Text(_selectedGathering):Text(''),
+									// 						// for(var i in eventsdate)
+									// 						// 	Container(
+									// 						// 		child: Column(
+									// 						// 			children: [
+									// 						// 				Center(child: Text('Day '+i['day'].toString())),
 
-																			i['date']!=null?Text("${i['date']['day']}/${i['date']['month']}/${i['date']['year']}"):Text(''),
+									// 						// 				i['date']!=null?Text("${i['date']['day']}/${i['date']['month']}/${i['date']['year']}"):Text(''),
 
-																			i['starttime']!=null?Text("${i['starttime']['hour']}hrs ${i['starttime']['minute']}"):Text(''),
+									// 						// 				i['starttime']!=null?Text("${i['starttime']['hour']}hrs ${i['starttime']['minute']}"):Text(''),
 
-																			i['duration']!=null?Text("${i['duration']}"):Text('')
-																		],
-																	),
-																),
-															Text('${(price*eventprice*gatheringprice).toString()}'),
+									// 						// 				i['duration']!=null?Text("${i['duration']}"):Text('')
+									// 						// 			],
+									// 						// 		),
+									// 						// 	),
+									// 						// Text('${(price*eventprice*gatheringprice).toString()}'),
+									// 						RaisedButton(
+									// 							color: Color.fromRGBO(104, 178, 160, 1),
+									// 							child: Text(
+									// 								'Submit',
+									// 								style: TextStyle(
+									// 									color: Colors.white
+									// 								),
+									// 							),
+									// 						),
 															
-														],
-													),
-												);
-											}
-										);
+									// 					],
+									// 				),
+									// 			);
+									// 		}
+									// 	);
+									// },
+									onPressed: () async{
+										final PostEventmodal event=await PostEvent().postEvent(
+											'5f8adc5320460b1bf4a1cea0',//artistid
+											'5f834cd904d3662828e79622',//userid
+											widget.artistname,
+											'abc',//username
+											widget.artisttype,
+											selectedevent.toString(),
+											_selectedGathering.toString(),
+											eventsdate,
+											location.text,
+											requirements.text,
+											'${(price*eventprice*gatheringprice).toString()}'
+										).then((PostEventmodal result){
+											debugPrint(result.toString());
+										});
+										setState(() {
+										});
 									},
 									color: Color.fromRGBO(104, 178, 160, 1),
 									child: Text(
@@ -542,7 +602,7 @@ class ArtistImage extends StatelessWidget{
 			decoration: BoxDecoration(
 				border:Border.all(width:2),
 				borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width),
-				image: DecorationImage(image: AssetImage('artist_image/$tag.jpg'))
+				// image: DecorationImage(image: AssetImage('artist_image/$tag.jpg'))
 			),
 			
 			width:MediaQuery.of(context).size.width*0.4,
@@ -553,24 +613,4 @@ class ArtistImage extends StatelessWidget{
     	  	// ),
     	);
   	}
-}
-
-class SpecialRequirements extends StatelessWidget{
-	@override
-	Widget build(BuildContext context) {
-		return Container(
-			margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*0.01),
-			child: TextField(
-				maxLines: 10,
-				decoration: InputDecoration(
-					hintText: "Let artist know you special requirements",
-					border: OutlineInputBorder(
-						borderRadius: BorderRadius.all(Radius.circular(10.0)),
-						borderSide: BorderSide(color: Colors.grey),
-					),
-				),
-			),
-		);
-	}
-
 }
