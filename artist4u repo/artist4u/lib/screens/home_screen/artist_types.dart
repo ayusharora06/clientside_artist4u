@@ -39,6 +39,14 @@ class _ArtistTypeState extends State<ArtistType> {
 									child: Container(
 										height: MediaQuery.of(context).size.height*0.11,
 										decoration: BoxDecoration(
+											boxShadow: [
+												BoxShadow(
+													color:Colors.black,
+													blurRadius: MediaQuery.of(context).size.width*0.004,
+													spreadRadius: 0,
+													offset: Offset( -MediaQuery.of(context).size.width*0.006, MediaQuery.of(context).size.width*0.004)
+												)
+											],
 											gradient: LinearGradient(
 												colors: [
 													// Color.fromRGBO(28, 181, 224, 1),
@@ -66,20 +74,21 @@ class _ArtistTypeState extends State<ArtistType> {
 														child: Container(
 															decoration: BoxDecoration(
 																	//color: Color.fromRGBO(130, 200, 255, 1),
-																	gradient: LinearGradient(
-																		colors: [
-																			// Color.fromRGBO(0, 0, 70, 1),
-																			// Color.fromRGBO(28, 181, 224, 1),
-																			Colors.white.withOpacity(0.3),
-																			Colors.white70.withOpacity(0.8)
+																	// gradient: LinearGradient(
+																	// 	colors: [
+																	// 		// Color.fromRGBO(0, 0, 70, 1),
+																	// 		// Color.fromRGBO(28, 181, 224, 1),
+																	// 		Colors.white.withOpacity(0.3),
+																	// 		Colors.white70.withOpacity(0.8)
 																			
-																			// Color.fromRGBO(104, 178, 160, 1),
-																			// Color.fromRGBO(48, 130, 146, 1),
-																		],
-																	),
+																	// 		// Color.fromRGBO(104, 178, 160, 1),
+																	// 		// Color.fromRGBO(48, 130, 146, 1),
+																	// 	],
+																	// ),
+																	color:Colors.white.withOpacity(0.96),
 																	borderRadius: BorderRadius.only(
-																		topLeft: Radius.circular(MediaQuery.of(context).size.width*0.02),
-																		bottomLeft: Radius.circular(MediaQuery.of(context).size.width*0.02),
+																		topLeft: Radius.circular(MediaQuery.of(context).size.height*0.03),
+																		bottomLeft: Radius.circular(MediaQuery.of(context).size.height*0.03),
 																	),
 															),
 															width: MediaQuery.of(context).size.width,
