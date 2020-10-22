@@ -1,3 +1,8 @@
+import 'package:artist4u/modals/otp.dart';
+import 'package:artist4u/modals/user_modal.dart';
+import 'package:artist4u/services/post_otp.dart';
+import 'package:artist4u/services/post_partner_bio.dart';
+import 'package:artist4u/services/post_signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_text/gradient_text.dart';
@@ -72,6 +77,8 @@ class LoginArea extends StatefulWidget{
 }
 
 class _LoginAreaState extends State<LoginArea> {
+	var phonecontroller = TextEditingController();
+	var emailcontroller = TextEditingController();
 	@override
 	Widget build(BuildContext context) {
 		return ListView(
@@ -82,8 +89,7 @@ class _LoginAreaState extends State<LoginArea> {
 					mainAxisAlignment: MainAxisAlignment.spaceAround,
 					children: [
 						FlatButton(
-							onPressed: (){
-								
+							onPressed: ()async {
 							}, 
 							color: Color.fromRGBO(219, 50, 54,1),
 							shape: RoundedRectangleBorder(
@@ -132,15 +138,32 @@ class _LoginAreaState extends State<LoginArea> {
 					],
 				),
 				TextField(
+					controller: phonecontroller,
 					decoration: new InputDecoration(labelText: "Enter your number"),
 				keyboardType: TextInputType.number,
 				),
 				Center(child: Text('\n Or')),
 				TextField(
+					controller: emailcontroller,
 					decoration: new InputDecoration(labelText: "Enter your Email"),
-				keyboardType: TextInputType.number,
 				),
-				FlatButton(onPressed: null, child: Text('Send OTP')),
+				FlatButton(
+					onPressed:() async{
+						final Otp otp=await PostOtp().postotploginphone(
+							phonecontroller.text
+						);
+					}, 
+					child: Text('Send OTP phone')
+				),
+
+				FlatButton(
+					onPressed:() async{
+						final Otp otp=await PostOtp().postotploginemail(
+							emailcontroller.text
+						);
+					}, 
+					child: Text('Send OTP email')
+				),
 			]
 		);
   	}
@@ -153,6 +176,9 @@ class SignUpArea extends StatefulWidget{
 }
 
 class _SignUpArea extends State<SignUpArea> {
+	var namecontroller=TextEditingController();
+	var emailcontroller=TextEditingController();
+	var phonecontroller=TextEditingController();
 	@override
 	Widget build(BuildContext context) {
 		return ListView(
@@ -165,6 +191,7 @@ class _SignUpArea extends State<SignUpArea> {
 						Expanded(
 							flex:3,
 							child: TextField(
+								controller: namecontroller,
 								decoration: new InputDecoration(labelText: "Enter your Name"),
 							),
 						),
@@ -176,6 +203,7 @@ class _SignUpArea extends State<SignUpArea> {
 						Expanded(
 							flex:3,
 							child: TextField(
+								controller: emailcontroller,
 								decoration: new InputDecoration(labelText: "Enter your Email"),
 							),
 						),
@@ -187,12 +215,22 @@ class _SignUpArea extends State<SignUpArea> {
 						Expanded(
 							flex:3,
 							child: TextField(
+								controller: phonecontroller,
 								decoration: new InputDecoration(labelText: "Enter your Phone"),
 							),
 						),
 					],
 				),
-				FlatButton(onPressed: null, child: Text('Submit'))
+				FlatButton(
+					onPressed: () async{
+						final UserModal user=await PostSignup().postSignup(
+							namecontroller.text,
+							emailcontroller.text,
+							phonecontroller.text
+						);
+					},
+					child: Text('Submit')
+				)
 			]
 		);
   	}
