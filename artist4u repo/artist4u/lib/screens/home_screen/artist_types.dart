@@ -39,6 +39,7 @@ class _ArtistTypeState extends State<ArtistType> {
 									child: Container(
 										height: MediaQuery.of(context).size.height*0.11,
 										decoration: BoxDecoration(
+											border: Border.all(width: 1.2),
 											boxShadow: [
 												BoxShadow(
 													color:Colors.black,
@@ -57,6 +58,8 @@ class _ArtistTypeState extends State<ArtistType> {
 													
 												],
 											),
+											// color:Color.fromRGBO(29, 92, 134,1),
+											// color:Color.fromRGBO(60, 60, 61,1),
 											borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.03),
 										),
 										child: Row(
@@ -113,6 +116,7 @@ class _ArtistTypeState extends State<ArtistType> {
 																
 																'${data.artistType}',
 																style: TextStyle(
+																	color: Colors.white,
 																	//fontWeight: FontWeight.w600,
 																	fontSize: MediaQuery.of(context).size.width*0.045,
 																	fontFamily: 'SpecialElite-Regular',

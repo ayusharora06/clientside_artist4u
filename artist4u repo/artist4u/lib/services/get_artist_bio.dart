@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:artist4u/modals/artist_type_model.dart';
 import 'package:artist4u/modals/get_artist_bio.dart';// ignore: unused_import
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../const.dart';

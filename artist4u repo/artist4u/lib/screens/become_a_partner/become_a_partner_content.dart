@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:artist4u/modals/post_partner_modal.dart';
-import 'package:artist4u/services/post_artistbio.dart';
 import 'package:artist4u/services/post_partner_bio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +43,11 @@ class _PartnerFormState extends State<PartnerForm> {
 	var description=TextEditingController();
 	var accountholdersname=TextEditingController();
 	var accountnumber=TextEditingController();
+ // ignore: non_constant_identifier_names
 	var IFSC=TextEditingController();
  	// ignore: avoid_init_to_null
 	File _profileimage=null;
+   // ignore: avoid_init_to_null
   	File _proofimage=null;
 	final picker = ImagePicker();
   	bool agreed=false;
@@ -523,6 +524,7 @@ class _PartnerFormState extends State<PartnerForm> {
 								if (_formKey.currentState.validate()) {}
 								if(_profileimage==null){}
 								if(_proofimage==null){}
+        // ignore: unused_local_variable
 								final PostPartnerBioModal artistbio=await PostPartnerBio().postPartnerBio(
 									name.text,
 									"f7c57ecb6828e33ec663dd7",
@@ -539,6 +541,7 @@ class _PartnerFormState extends State<PartnerForm> {
 									IFSC.text,
 									agreed.toString()
 								)
+        // ignore: missing_return
 								.then((PostPartnerBioModal value){
 										// debugPrint(value.toString());
 										uploadimage(_profileimage,'profile',"5f834cd904d3662828e79622");

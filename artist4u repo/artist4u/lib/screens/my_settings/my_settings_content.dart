@@ -5,6 +5,7 @@ import 'package:artist4u/services/post_update_user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class MySettingsContent extends StatelessWidget{
 	String name='Ayush';
 	String email='asd';
@@ -20,6 +21,7 @@ class MySettingsContent extends StatelessWidget{
 					title: Text('Change Name'),
 					trailing: Icon(Icons.keyboard_arrow_right),
 					onTap: ()async {
+      // ignore: unused_local_variable
 						final Otp otp=await PostOtp().postotp();
 						showDialog(  
 							barrierDismissible: true,
@@ -47,6 +49,7 @@ class MySettingsContent extends StatelessWidget{
 											RaisedButton(
 												color: Color.fromRGBO(104, 178, 160, 1),
 												onPressed: () async{
+             // ignore: unused_local_variable
 													final UpdateUserInfo updateduser=await PostUpdateUserInfo().postupdatename(namecontroller.text);
 												},
 												child: Text(
@@ -73,6 +76,7 @@ class MySettingsContent extends StatelessWidget{
 					title:Text('Change E-mail'),
 					trailing: Icon(Icons.keyboard_arrow_right),
 					onTap: ()async {
+      // ignore: unused_local_variable
 						final Otp otp=await PostOtp().postotp();
 						showDialog(  
 							barrierDismissible: true,
@@ -100,6 +104,7 @@ class MySettingsContent extends StatelessWidget{
 											RaisedButton(
 												color: Color.fromRGBO(104, 178, 160, 1),
 												onPressed: () async{
+             // ignore: unused_local_variable
 													final UpdateUserInfo updateduser=await PostUpdateUserInfo().postupdateemail(emailcontroller.text);
 												},
 												child: Text(
@@ -121,6 +126,7 @@ class MySettingsContent extends StatelessWidget{
 					title:Text('Change Number'),
 					trailing: Icon(Icons.keyboard_arrow_right),
 					onTap: ()async {
+      // ignore: unused_local_variable
 						final Otp otp=await PostOtp().postotp();
 						showDialog(  
 							barrierDismissible: true,
@@ -148,6 +154,7 @@ class MySettingsContent extends StatelessWidget{
 											RaisedButton(
 												color: Color.fromRGBO(104, 178, 160, 1),
 												onPressed: () async{
+             // ignore: unused_local_variable
 													final UpdateUserInfo updateduser=await PostUpdateUserInfo().postupdatephonenumber(phonecontroller.text);
 												},
 												child: Text(

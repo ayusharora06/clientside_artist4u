@@ -1,13 +1,26 @@
 import 'package:artist4u/drawers/user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class HomeDrawerCollection extends StatelessWidget{
+import 'package:shared_preferences/shared_preferences.dart';
+// ignore: must_be_immutable
+class HomeDrawerCollection extends StatefulWidget{
+  @override
+  _HomeDrawerCollectionState createState() => _HomeDrawerCollectionState();
+}
+
+class _HomeDrawerCollectionState extends State<HomeDrawerCollection> {
   Map<String,dynamic> mydata={
 		'name':'Ayush Arora',
 		'email': 'ayusharora819@gmail.com',
 		'isArtist':false
 	};
-	// var a=UserInfo();
+  Future<Map<String,dynamic>> userdata;
+	@override
+	void initState(){
+		userdata=getUserData();
+		super.initState();
+	}
+
 	@override
 	Widget build(BuildContext context) {
 		return Drawer(
@@ -33,20 +46,51 @@ class HomeDrawerCollection extends StatelessWidget{
 						},
 					),
 
-					mydata['isArtist']!=true?ListTile(
-					title:Text('Become an Artist'),
-					trailing: Icon(Icons.keyboard_arrow_right),
-					onTap: (){Navigator.pushNamed(context, '/becomeanartist');},
-					):ListTile(
-						title:Text('Manage Artist account'),
-						trailing: Icon(Icons.keyboard_arrow_right),
-						onTap: (){},
+					FutureBuilder<Map<String,dynamic>>(
+						future: userdata,
+						builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+							if(snapshot.hasData){
+								var data=snapshot.data;
+								// debugPrint(data.toString());
+								return data['isartist']!=true?ListTile(
+									title:Text('Become an Artist'),
+									trailing: Icon(Icons.keyboard_arrow_right),
+									onTap: (){Navigator.pushNamed(context, '/becomeanartist');},
+								):ListTile(
+									title:Text('Manage Artist account'),
+									trailing: Icon(Icons.keyboard_arrow_right),
+									onTap: (){},
+								);
+							}else{
+								return Center(child:CircularProgressIndicator());
+							}
+						}
 					),
-					ListTile(
-						title:Text('Become a Partner'),
-						trailing: Icon(Icons.keyboard_arrow_right),
-						onTap: (){Navigator.pushNamed(context, '/becomeapartner');},
+					FutureBuilder<Map<String,dynamic>>(
+						future: userdata,
+						builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+							if(snapshot.hasData){
+								var data=snapshot.data;
+								// debugPrint(data.toString());
+								return data['ispartner']!=true?ListTile(
+									title:Text('Become a Partner'),
+									trailing: Icon(Icons.keyboard_arrow_right),
+									onTap: (){Navigator.pushNamed(context, '/becomeapartner');},
+								):ListTile(
+									title:Text('Manage Partner account'),
+									trailing: Icon(Icons.keyboard_arrow_right),
+									onTap: (){},
+								);
+							}else{
+								return Center(child:CircularProgressIndicator());
+							}
+						}
 					),
+					// ListTile(
+					// 	title:Text('Become a Partner'),
+					// 	trailing: Icon(Icons.keyboard_arrow_right),
+					// 	onTap: (){Navigator.pushNamed(context, '/becomeapartner');},
+					// ),
 		
 					//Help
 					ListTile(
@@ -151,4 +195,14 @@ class HomeDrawerCollection extends StatelessWidget{
             
 	}
 }
-            
+Future<Map<String,dynamic>> getUserData() async{
+	SharedPreferences userdata=await SharedPreferences.getInstance();
+	Map<String,dynamic> user={
+		"ispartner":userdata.getBool('ispartner'),
+		"isartist":userdata.getBool('isartist'),
+		// userdata.getString('otp', jsonResponse['token']);
+		// "token":userdata.getString('token'),
+	};
+	// await userdata.clear();
+	return user;
+} 

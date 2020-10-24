@@ -1,11 +1,10 @@
 import 'package:artist4u/modals/otp.dart';
 import 'package:artist4u/modals/user_modal.dart';
 import 'package:artist4u/services/post_otp.dart';
-import 'package:artist4u/services/post_partner_bio.dart';
 import 'package:artist4u/services/post_signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_text/gradient_text.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginContent extends StatefulWidget{
 	@override
@@ -149,6 +148,7 @@ class _LoginAreaState extends State<LoginArea> {
 				),
 				FlatButton(
 					onPressed:() async{
+      // ignore: unused_local_variable
 						final Otp otp=await PostOtp().postotploginphone(
 							phonecontroller.text
 						);
@@ -158,6 +158,7 @@ class _LoginAreaState extends State<LoginArea> {
 
 				FlatButton(
 					onPressed:() async{
+      // ignore: unused_local_variable
 						final Otp otp=await PostOtp().postotploginemail(
 							emailcontroller.text
 						);
@@ -223,11 +224,15 @@ class _SignUpArea extends State<SignUpArea> {
 				),
 				FlatButton(
 					onPressed: () async{
+      				// ignore: unused_local_variable
 						final UserModal user=await PostSignup().postSignup(
 							namecontroller.text,
 							emailcontroller.text,
 							phonecontroller.text
 						);
+						SharedPreferences userdata=await SharedPreferences.getInstance();
+						String islogedin=userdata.getString('message');
+						islogedin=='authenticated'?Navigator.pushNamed(context, '/home'):Center(child:CircularProgressIndicator()); 
 					},
 					child: Text('Submit')
 				)

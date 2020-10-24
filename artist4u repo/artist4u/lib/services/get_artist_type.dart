@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:artist4u/const.dart';
 import 'package:artist4u/modals/artist_type_model.dart';
-import 'package:artist4u/modals/offers_modal.dart';
+// ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 class GetArtistType{
@@ -14,9 +14,9 @@ class GetArtistType{
 			var response = await client.get(url);
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
-				debugPrint(jsonResponse.toString());
+				// debugPrint(jsonResponse.toString());
 				artistTypeModel = ArtistTypeModel.fromJson(jsonResponse);
-				debugPrint("model"+artistTypeModel);
+				// debugPrint("model"+artistTypeModel);
 			}
 		}catch(Exception){
 			return artistTypeModel;

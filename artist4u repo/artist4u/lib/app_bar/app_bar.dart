@@ -37,7 +37,7 @@ class MyAppBar extends StatelessWidget{
 				decoration: BoxDecoration(
 					color: Color.fromRGBO(255, 255, 255, 1),
 					borderRadius:BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width*0.1)),
-					border:Border.all(color:Colors.white,width: 2)
+					border:Border.all(color:Color.fromRGBO(48, 130, 146, 1),width: 2)
 				),
 				child: TextField(
 					maxLines: 1,

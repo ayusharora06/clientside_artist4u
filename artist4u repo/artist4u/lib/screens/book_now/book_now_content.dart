@@ -1,6 +1,7 @@
 import 'package:artist4u/modals/post_event.dart';
 import 'package:artist4u/services/post_event.dart';
 import 'package:flutter/cupertino.dart';
+// ignore: unused_import
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -556,6 +557,7 @@ class _BookNowContentState extends State<BookNowContent> {
 									// 	);
 									// },
 									onPressed: () async{
+          // ignore: unused_local_variable
 										final PostEventmodal event=await PostEvent().postEvent(
 											'5f8adc5320460b1bf4a1cea0',//artistid
 											'5f834cd904d3662828e79622',//userid
@@ -568,6 +570,7 @@ class _BookNowContentState extends State<BookNowContent> {
 											location.text,
 											requirements.text,
 											'${(price*eventprice*gatheringprice).toString()}'
+          // ignore: missing_return
 										).then((PostEventmodal result){
 											debugPrint(result.toString());
 										});
@@ -591,6 +594,7 @@ class _BookNowContentState extends State<BookNowContent> {
 		);
 	}
 }
+// ignore: must_be_immutable
 class ArtistImage extends StatelessWidget{
 	final String tag;
 	bool margin=true;

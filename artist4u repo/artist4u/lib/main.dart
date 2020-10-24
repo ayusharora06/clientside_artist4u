@@ -19,7 +19,8 @@ import 'package:artist4u/screens/privacy_policy/privacy_policy_page.dart';
 import 'package:artist4u/screens/terms_of_use/terms_of_use_page.dart';
 import 'package:artist4u/screens/track_your_progress/track_your_progress_page.dart';
 import 'package:flutter/material.dart';
-void main() {
+import 'package:shared_preferences/shared_preferences.dart';
+void main(){
 	runApp(MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
 			debugShowCheckedModeBanner: false,
 			title: 'Artist4U',
 			routes: {
-				'/': (context) => Login(),
+				'/login': (context) => Login(),
 				'/home':(context) => HomeScreen(),
 				'/artistlist':(context) => ArtistListPage(),
 				'/artistbiopage':(context) => ArtistBioPage(),
@@ -53,6 +54,60 @@ class MyApp extends StatelessWidget {
 				'/becomeapartner':(context)=>BecomeAPartnerPage(),
 				'/ourpartners':(context)=>OurPartners()
 			},
+      		home:Loading()
 		);
-	}       
+	}    
 }
+class Loading extends StatefulWidget{
+	@override
+	_LoadingState createState() => _LoadingState();
+
+}
+class _LoadingState extends State<Loading> {
+	Future<Map<String,dynamic>> userdata;
+	@override
+	void initState(){
+		userdata=getUserData();
+		super.initState();
+	}
+	@override
+  	Widget build(BuildContext context) {
+		return SafeArea(
+			child:Scaffold(
+				 //drawerScrimColor: Colors.blueGrey,
+				body:FutureBuilder<Map<String,dynamic>>(
+					future: userdata,
+					builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+						if(snapshot.hasData){
+							var data=snapshot.data;
+							debugPrint(data.toString());
+							return data['token']==null?Login():HomeScreen();
+						}else{
+							return Center(child:CircularProgressIndicator());
+						}
+					}
+				),
+			),
+		);
+ 
+	}
+}
+Future<Map<String,dynamic>> getUserData() async{
+	SharedPreferences userdata=await SharedPreferences.getInstance();
+	Map<String,dynamic> user={
+		"token":userdata.getString('token'),
+		"artistid":userdata.getString('artistid'),
+		"artisttype":userdata.getString('artisttype'),
+		"partnerid":userdata.getString('partnerid'),
+		"ispartner":userdata.getBool('ispartner'),
+		"isartist":userdata.getBool('isartist'),
+		// userdata.getString('otp', jsonResponse['token']);
+		// "token":userdata.getString('token'),
+		"_id":userdata.getString('_id'),
+		"name":userdata.getString('name'),
+		"email":userdata.getString('email'),
+		"phone":userdata.getString('phone'),
+	};
+	// await userdata.clear();
+	return user;
+}  

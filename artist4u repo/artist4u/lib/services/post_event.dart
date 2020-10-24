@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:artist4u/modals/post_event.dart';
-import 'package:artist4u/modals/post_partner_modal.dart';
 // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -50,6 +49,7 @@ class PostEvent{
 				// debugPrint("model"+artistTypeModel.toString());
 			}
       if (response.statusCode == 400) {
+    // ignore: unused_local_variable
 				var jsonResponse = json.decode(response.body);
 				// debugPrint(jsonResponse.toString());
 			}

@@ -39,6 +39,7 @@ class GetArtistBioModal {
         this.peopleschoice,
         this.accountholdername,
         this.accountnumber,
+        // ignore: non_constant_identifier_names
         this.IFSC,
         this.v,
         this.profile,
@@ -74,6 +75,7 @@ class GetArtistBioModal {
     String peopleschoice;
     String accountholdername;
     String accountnumber;
+    // ignore: non_constant_identifier_names
     String IFSC;
     int v;
     Idproof profile;

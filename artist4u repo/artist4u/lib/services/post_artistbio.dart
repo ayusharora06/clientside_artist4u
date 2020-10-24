@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:artist4u/modals/artist_type_model.dart';
 import 'package:artist4u/modals/artistbio_modal.dart';
 // ignore: unused_import
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import '../const.dart';
 class PostArtistBio{
 	Future<ArtistBioModal> postArtistBio(
 		String name,
+  // ignore: non_constant_identifier_names
 		String artist_type,
     String experience,
 		String gender,
@@ -32,6 +32,7 @@ class PostArtistBio{
 		List dynamicprices,
     String accountholdersname,
     String accountnumber,
+    // ignore: non_constant_identifier_names
     String IFSC,
 		String agreed
 	) async{

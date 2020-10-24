@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'artist_info.dart';
 import 'book_now_button.dart';
 import 'gallery.dart';
+// ignore: must_be_immutable
 class ArtistBio extends StatefulWidget{
 	final String name;
 	String artistType;

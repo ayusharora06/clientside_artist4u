@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
@@ -225,6 +226,7 @@ class ArtistForm extends StatefulWidget{
 class _ArtistFormState extends State<ArtistForm> {
 	ArtistBioModal _artistBioModal;
 	var name=TextEditingController();
+ // ignore: non_constant_identifier_names
 	var artist_type=TextEditingController();
   var experience = TextEditingController();
 	String gender='';
@@ -247,6 +249,7 @@ class _ArtistFormState extends State<ArtistForm> {
 	List<Map> dynamicprices=[];
 	var accountholdersname=TextEditingController();
 	var accountnumber=TextEditingController();
+ // ignore: non_constant_identifier_names
 	var IFSC=TextEditingController();
 	bool agreed=false;
 	// bool agreed;
@@ -278,6 +281,7 @@ class _ArtistFormState extends State<ArtistForm> {
 			if(pickedFile !=null){ 
 				var path = pickedFile.path.split('.');
 				path.last='mp4';
+    // ignore: unused_local_variable
 				String newpath=path.join('.');
 				// debugPrint("\n\n\n${newpath}\n${pickedFile.path}\n\n");
 
@@ -1493,6 +1497,7 @@ class _ArtistFormState extends State<ArtistForm> {
 									IFSC.text,
 									agreed.toString()
 								)
+        // ignore: missing_return
 								.then((ArtistBioModal value){
 									debugPrint(artist_type.text);
 									uploadimage(_profileimage,'profile',artist_type.text,value.id);
@@ -1518,6 +1523,7 @@ class _ArtistFormState extends State<ArtistForm> {
 		);
   
 	}
+ // ignore: non_constant_identifier_names
 	void uploadimage(File image,String type,String artist_type, String id) async{
 		var url='http://$ip:3000/artistbio/add_artistbio/$type/$artist_type/$id';
 		var request = http.MultipartRequest('PATCH',Uri.parse(url));
@@ -1528,6 +1534,7 @@ class _ArtistFormState extends State<ArtistForm> {
 		request.send();		
 	}
 
+ // ignore: non_constant_identifier_names
 	void uploadgallary(List<dynamic> gallery,String artist_type, String id) async{
 		var url='http://$ip:3000/artistbio/add_artistbio/gallery/$artist_type/$id';
 		var request = http.MultipartRequest('PATCH',Uri.parse(url));

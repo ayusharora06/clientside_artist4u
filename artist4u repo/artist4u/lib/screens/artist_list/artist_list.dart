@@ -6,7 +6,9 @@ import 'package:artist4u/services/get_artistlist.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+// ignore: must_be_immutable
 class ArtisList extends StatefulWidget{
+  
 	String title;
 	ArtisList(this.title);
   @override

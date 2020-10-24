@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:artist4u/modals/artist_type_model.dart';
 import 'package:artist4u/modals/get_artist_list_modal.dart';
 // ignore: unused_import
 import 'package:flutter/material.dart';

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:artist4u/const.dart';
 import 'package:artist4u/modals/offers_modal.dart';
+// ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 class GetOffer{
@@ -13,9 +14,9 @@ class GetOffer{
 			var response = await client.get(url);
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
-				debugPrint(jsonResponse.toString());
+				// debugPrint(jsonResponse.toString());
 				offerModal = OfferModal.fromJson(jsonResponse);
-				debugPrint("model"+offerModal);
+				// debugPrint("model"+offerModal);
 			}
 		}catch(Exception){
 			return offerModal;

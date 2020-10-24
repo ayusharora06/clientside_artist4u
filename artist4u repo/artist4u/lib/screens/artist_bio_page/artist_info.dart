@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 final Map<String,dynamic> data={'name':'Shubham Khanduri','image':'shubham.jpg', 'people choice':'1','recommended':true,'description':'Rajput made his film debut in the buddy drama Kai Po Che! (2013), for which he received a nomination for the Filmfare Award for Best Male Debut. He then starred in the romantic comedy Shuddh Desi Romance (2013) and as the titular detective in the action thriller Detective Byomkesh Bakshy! (2015). His highest-grossing releases came with a supporting role in the satire PK (2014), followed by the titular role in the sports biopic M.S. Dhoni: The Untold Story (2016). For his performance in the latter, he received his first nomination for the Filmfare Award for Best Actor.[6][7] Rajput went on to star in the commercially successful films Kedarnath (2018) and Chhichhore (2019)','expirience':{'year':1},'comfort':['English','hindi','tamil','hindi','tamil','hindi','tamil','hindi','tamil'],'event type':['Devotional', 'Charity','Corporate'],'id':1,'min_price':'2,500','max_price':'5,000'};
 String artistname;
+// ignore: must_be_immutable
 class ArtistBasicInfo extends StatelessWidget{
 	final String name;
 	String recommended;
@@ -101,6 +102,7 @@ class ArtistBasicInfo extends StatelessWidget{
 	}
 
 }
+// ignore: must_be_immutable
 class ArtistImage extends StatelessWidget{
 	String profile;
 	ArtistImage(this.profile);
@@ -134,6 +136,7 @@ class ArtistImage extends StatelessWidget{
   	}
 
 }
+// ignore: must_be_immutable
 class Experience extends StatelessWidget{
   String experience;
   Experience(this.experience);
@@ -183,6 +186,7 @@ class Experience extends StatelessWidget{
     	);
   	}
 }
+// ignore: must_be_immutable
 class Duration extends StatelessWidget{
 	String duration;
 	Duration(this.duration);
@@ -230,6 +234,7 @@ class Duration extends StatelessWidget{
 
 }
 
+// ignore: must_be_immutable
 class PeoplesChoice extends StatelessWidget{
 	String peopleschoice;
 	PeoplesChoice(this.peopleschoice);
@@ -272,6 +277,7 @@ class PeoplesChoice extends StatelessWidget{
    		):Text('');
   	}
 }
+// ignore: must_be_immutable
 class AboutArtist extends StatelessWidget{
 	String description;
 	AboutArtist(this.description);
@@ -327,6 +333,7 @@ class AboutArtist extends StatelessWidget{
 			;
 	}
 }
+// ignore: must_be_immutable
 class ComfortLanguage extends StatelessWidget{
 	List preferredlanguage;
 	ComfortLanguage({this.preferredlanguage});
@@ -422,6 +429,7 @@ class ComfortLanguage extends StatelessWidget{
     	;
   	}
 }
+// ignore: must_be_immutable
 class PreferredEvents extends StatelessWidget{
 	List preferredevents;
 	PreferredEvents({this.preferredevents});
@@ -499,6 +507,7 @@ class PreferredEvents extends StatelessWidget{
   	}
 }
 
+// ignore: must_be_immutable
 class Specialization extends StatelessWidget{
 	List specialization;
 	Specialization({this.specialization});
@@ -575,6 +584,7 @@ class Specialization extends StatelessWidget{
   	}
 }
 
+// ignore: must_be_immutable
 class Price extends StatelessWidget{
   String single='';
   List multiple=[''];
