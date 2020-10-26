@@ -184,9 +184,26 @@ class _HomeDrawerCollectionState extends State<HomeDrawerCollection> {
 					),
 		
 					//Login / Sign Out
-					ListTile(
-					title: Text('Sign out'),
-					trailing: Icon(Icons.keyboard_arrow_right),
+					FutureBuilder<Map<String,dynamic>>(
+						future: userdata,
+						builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+							if(snapshot.hasData){
+								var data=snapshot.data;
+								// debugPrint(data.toString());
+								return data['message']=='authenticated'?ListTile(
+									title:Text('Sign Out'),
+									trailing: Icon(Icons.keyboard_arrow_right),
+									onTap: ()async{
+										SharedPreferences userdata=await SharedPreferences.getInstance();
+										await userdata.clear().then((value){
+											Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+										});
+									},
+								):Text('');
+							}else{
+								return Center(child:CircularProgressIndicator());
+							}
+						}
 					),
                       
 				],
@@ -200,6 +217,7 @@ Future<Map<String,dynamic>> getUserData() async{
 	Map<String,dynamic> user={
 		"ispartner":userdata.getBool('ispartner'),
 		"isartist":userdata.getBool('isartist'),
+		"message":userdata.getString('message'),
 		// userdata.getString('otp', jsonResponse['token']);
 		// "token":userdata.getString('token'),
 	};

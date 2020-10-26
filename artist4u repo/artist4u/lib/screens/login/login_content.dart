@@ -1,5 +1,6 @@
 import 'package:artist4u/modals/otp.dart';
 import 'package:artist4u/modals/user_modal.dart';
+import 'package:artist4u/services/post_login.dart';
 import 'package:artist4u/services/post_otp.dart';
 import 'package:artist4u/services/post_signup.dart';
 import 'package:flutter/cupertino.dart';
@@ -144,24 +145,71 @@ class _LoginAreaState extends State<LoginArea> {
 				Center(child: Text('\n Or')),
 				TextField(
 					controller: emailcontroller,
-					decoration: new InputDecoration(labelText: "Enter your Email"),
+					decoration: new InputDecoration(labelText: "Enter yourEmail"),
 				),
 				FlatButton(
 					onPressed:() async{
-      // ignore: unused_local_variable
-						final Otp otp=await PostOtp().postotploginphone(
-							phonecontroller.text
+      					// ignore: unused_local_variable
+						// final Otp otp=await PostOtp().postotploginphone(
+						// 	phonecontroller.text
+						// );
+      					// ignore: unused_local_variable
+						// final Otp otp=await PostOtp().postotploginemail(
+						// 	emailcontroller.text
+						// );
+      					// ignore: unused_local_variable
+						final UserModal user=await PostLogin().postLoginPhone(
+							phonecontroller.text,
+							// phonecontroller.text
 						);
+						SharedPreferences userdata=await SharedPreferences.getInstance();
+						String islogedin=userdata.getString('message');
+						islogedin=='authenticated'?Navigator.pushNamed(context, '/home'):Center(child:CircularProgressIndicator());
 					}, 
 					child: Text('Send OTP phone')
 				),
 
 				FlatButton(
 					onPressed:() async{
-      // ignore: unused_local_variable
-						final Otp otp=await PostOtp().postotploginemail(
-							emailcontroller.text
+      					// ignore: unused_local_variable
+						// final Otp otp=await PostOtp().postotploginemail(
+						// 	emailcontroller.text
+						// );
+      					// ignore: unused_local_variable
+						final UserModal user=await PostLogin().postLoginEmail(
+							emailcontroller.text,
+							// phonecontroller.text
 						);
+						SharedPreferences userdata=await SharedPreferences.getInstance();
+						String islogedin=userdata.getString('message');
+						islogedin=='authenticated'?Navigator.pushNamed(context, '/home'):Center(child:CircularProgressIndicator()); 
+						// .then((result)async{
+						// 	var otpcontroller=TextEditingController();
+						// 	showDialog(
+						// 		context: context,
+						// 		builder: (BuildContext context){
+						// 			return AlertDialog(
+						// 				content: Column(
+						// 					children: <Widget>[
+						// 						TextField(
+						// 							controller: otpcontroller,
+						// 							decoration: new InputDecoration(labelText: "Enter your OTP"),
+						// 							keyboardType: TextInputType.number,
+						// 						),
+						// 				],
+						// 				),
+						// 			);
+						// 		}
+						// 	);
+						// 	// ignore: unused_local_variable
+						// 	final Otp otp=await PostOtp().postotploginemail(
+						// 		otpcontroller.text
+						// 	).then((finalresult)async{
+						// 		SharedPreferences userdata=await SharedPreferences.getInstance();
+						// 		String islogedin=userdata.getString('message');
+						// 		islogedin=='authenticated'?Navigator.pushNamed(context, '/home'):Center(child:CircularProgressIndicator()); 
+						// 	});
+						// });
 					}, 
 					child: Text('Send OTP email')
 				),

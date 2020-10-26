@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
 			debugShowCheckedModeBanner: false,
 			title: 'Artist4U',
 			routes: {
+        '/':(context)=>Loading(),
 				'/login': (context) => Login(),
 				'/home':(context) => HomeScreen(),
 				'/artistlist':(context) => ArtistListPage(),
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
 				'/becomeapartner':(context)=>BecomeAPartnerPage(),
 				'/ourpartners':(context)=>OurPartners()
 			},
-      		home:Loading()
+      		// home:Loading()
 		);
 	}    
 }
@@ -80,7 +81,7 @@ class _LoadingState extends State<Loading> {
 					builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
 						if(snapshot.hasData){
 							var data=snapshot.data;
-							debugPrint(data.toString());
+							// debugPrint(data.toString());
 							return data['token']==null?Login():HomeScreen();
 						}else{
 							return Center(child:CircularProgressIndicator());
@@ -96,13 +97,14 @@ Future<Map<String,dynamic>> getUserData() async{
 	SharedPreferences userdata=await SharedPreferences.getInstance();
 	Map<String,dynamic> user={
 		"token":userdata.getString('token'),
+    "message":userdata.getString('message'),
 		"artistid":userdata.getString('artistid'),
 		"artisttype":userdata.getString('artisttype'),
 		"partnerid":userdata.getString('partnerid'),
 		"ispartner":userdata.getBool('ispartner'),
 		"isartist":userdata.getBool('isartist'),
 		// userdata.getString('otp', jsonResponse['token']);
-		// "token":userdata.getString('token'),
+		"userbookings":userdata.getString('userbookings'),
 		"_id":userdata.getString('_id'),
 		"name":userdata.getString('name'),
 		"email":userdata.getString('email'),
