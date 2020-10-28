@@ -10,6 +10,7 @@ import 'package:artist4u/screens/favorite/favorite_page.dart';
 import 'package:artist4u/screens/home_screen/home_screen.dart';
 import 'package:artist4u/screens/legal/legal_page.dart';
 import 'package:artist4u/screens/login/login.dart';
+import 'package:artist4u/screens/manage_partner/manage_partner_page.dart';
 import 'package:artist4u/screens/my_account/my_account_page.dart';
 import 'package:artist4u/screens/my_booking/my_booking_page.dart';
 import 'package:artist4u/screens/my_settings/my_settings_page.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
 			debugShowCheckedModeBanner: false,
 			title: 'Artist4U',
 			routes: {
-        '/':(context)=>Loading(),
+        		'/':(context)=>Loading(),
 				'/login': (context) => Login(),
 				'/home':(context) => HomeScreen(),
 				'/artistlist':(context) => ArtistListPage(),
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
 				'/aboutus':(context)=>AboutUsPage(),
 				'/favorites':(context)=>FavoritePage(),
 				'/becomeapartner':(context)=>BecomeAPartnerPage(),
-				'/ourpartners':(context)=>OurPartners()
+				'/ourpartners':(context)=>OurPartners(),
+				'/managepartner':(context)=>ManagePartnerPage()
 			},
       		// home:Loading()
 		);

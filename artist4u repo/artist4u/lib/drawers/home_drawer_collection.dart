@@ -79,7 +79,7 @@ class _HomeDrawerCollectionState extends State<HomeDrawerCollection> {
 								):ListTile(
 									title:Text('Manage Partner account'),
 									trailing: Icon(Icons.keyboard_arrow_right),
-									onTap: (){},
+									onTap: (){Navigator.pushNamed(context, '/managepartner');},
 								);
 							}else{
 								return Center(child:CircularProgressIndicator());
