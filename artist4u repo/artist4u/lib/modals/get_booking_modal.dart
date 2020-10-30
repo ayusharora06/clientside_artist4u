@@ -38,6 +38,7 @@ class Result {
         this.requiements,
         this.status,
         this.price,
+        this.refercode,
     });
 
     String artistid;
@@ -47,11 +48,12 @@ class Result {
     String artisttype;
     String typesofevent;
     String gatheringsize;
-    List<Eventdetail> eventdetails;
+    String eventdetails;
     String location;
     String requiements;
     String status;
     String price;
+    String refercode;
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
         artistid: json["artistid"],
@@ -61,11 +63,12 @@ class Result {
         artisttype: json["artisttype:"],
         typesofevent: json["typesofevent"],
         gatheringsize: json["gatheringsize"],
-        eventdetails: List<Eventdetail>.from(json["eventdetails"].map((x) => Eventdetail.fromJson(x))),
+        eventdetails: json["eventdetails"],
         location: json["location"],
         requiements: json["requiements"],
         status: json["status"],
         price: json["price"],
+        refercode: json["refercode"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -76,34 +79,11 @@ class Result {
         "artisttype:": artisttype,
         "typesofevent": typesofevent,
         "gatheringsize": gatheringsize,
-        "eventdetails": List<dynamic>.from(eventdetails.map((x) => x.toJson())),
+        "eventdetails": eventdetails,
         "location": location,
         "requiements": requiements,
         "status": status,
         "price": price,
-    };
-}
-
-class Eventdetail {
-    Eventdetail({
-        this.date,
-        this.time,
-        this.duration,
-    });
-
-    String date;
-    String time;
-    String duration;
-
-    factory Eventdetail.fromJson(Map<String, dynamic> json) => Eventdetail(
-        date: json["date"],
-        time: json["time"],
-        duration: json["Duration"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "date": date,
-        "time": time,
-        "Duration": duration,
+        "refercode": refercode,
     };
 }

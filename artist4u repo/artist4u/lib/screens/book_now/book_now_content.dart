@@ -27,10 +27,11 @@ class _BookNowContentState extends State<BookNowContent> {
 	final List<String> gatheringsize=['0-50','50-100','100-250','250-500','More than 500'];
 	final Map gatheringsizeprice={'0-50':1.1,'50-100':1.2,'100-250':1.3,'250-500':1.4,'More than 500':1.5};
 	List<Map> eventsdate=[
-		{'day':1,'date':null,'starttime':null,'duraion':null}
+		{'day':1,'date':null,'time':null,'duration':0.0}
 	];
 	var _selectedGathering;
 	var _currentSliderValue=0.0;
+	List<double> durationvalue=[];
 	var requirements = TextEditingController();
 	var location = TextEditingController();
   var refercode=TextEditingController();
@@ -399,6 +400,8 @@ class _BookNowContentState extends State<BookNowContent> {
 																		onPressed: (){
 																			setState(() {
 																				eventsdate.remove(index);
+																				durationvalue.removeAt(1);
+																				debugPrint(durationvalue.toString());
 																				eventprice=eventsdate.length;
 																			});
 																		},
@@ -411,20 +414,20 @@ class _BookNowContentState extends State<BookNowContent> {
 															'Duration'
 														),
 														Slider(
-															value: _currentSliderValue,
+															value: index['duration'],
 															min: 0,
 															max: 8,
 															divisions: 8,
-															label: _currentSliderValue.round().toString(),
+															label: index['duration'].round().toString(),
 															onChanged: (double value) {
 																setState(() {
-																	_currentSliderValue = value;
+																	index['duration'] = value;
 																	index['duration']=value;
 																});
 															},
 														),
 														Text(
-															'${_currentSliderValue.toString()} Hrs'
+															'${index['duration'].toString()} Hrs'
 														)
 													],
 												),
@@ -434,7 +437,9 @@ class _BookNowContentState extends State<BookNowContent> {
 											icon: Icon(Icons.add_circle), 
 											onPressed: (){
 												setState(() {
-													eventsdate.add({'day':eventsdate.length+1,'date':null,'time':null});
+													eventsdate.add({'day':eventsdate.length+1,'date':null,'time':null,'duration':0.0});
+													durationvalue.add(0.0);
+													debugPrint(eventsdate.toString());
 													eventprice=eventsdate.length;
 												});
 											},
@@ -572,6 +577,7 @@ class _BookNowContentState extends State<BookNowContent> {
 									// 	);
 									// },
 									onPressed: () async{
+                    debugPrint(eventsdate.toString());
           // ignore: unused_local_variable
 										final PostEventmodal event=await PostEvent().postEvent(
 											widget.artistname,

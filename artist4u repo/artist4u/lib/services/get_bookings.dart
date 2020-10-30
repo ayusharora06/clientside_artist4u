@@ -4,6 +4,7 @@ import 'package:artist4u/modals/get_booking_modal.dart';
 // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 class GetBooking{
 
 	Future<GetBookingModal> getBookingUpcoming() async{
@@ -12,7 +13,10 @@ class GetBooking{
 		var bookingModal = null;
 		var url = 'http://$ip:3000/events/upcoming';
 		try {
-			var response = await client.get(url,headers: {'Authorization':'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBAZ21haWwuY29tIiwiaWQiOiI1ZjhkZTE5YzlkZGJjMDJkMjBkMDNhYTEiLCJwaG9uZSI6Ijk5OTUwMDQ3MTUiLCJpYXQiOjE2MDMxMzM4NTIsImV4cCI6MTYwMzE0ODI1Mn0.bFSkbwsVzVgLrI2ovIPFOJGqhnf7GBKq5p8dBmJXfQE'});
+      Map<String,dynamic> userdata;
+			userdata=await getUserData();
+      // debugPrint(userdata['token']);
+			var response = await client.get(url,headers: {'Authorization':"bearer ${userdata['token']}"});
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
 				// debugPrint(jsonResponse.toString());
@@ -25,3 +29,12 @@ class GetBooking{
 		return bookingModal;
 	}
 }
+Future<Map<String,dynamic>> getUserData() async{
+	SharedPreferences userdata=await SharedPreferences.getInstance();
+	Map<String,dynamic> user={
+		"token":userdata.getString('token'),
+		"_id":userdata.getString('_id'),
+	};
+	// await userdata.clear();
+	return user;
+} 

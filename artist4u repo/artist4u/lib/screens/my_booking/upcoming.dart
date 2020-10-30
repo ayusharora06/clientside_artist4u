@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:artist4u/modals/get_booking_modal.dart';
 import 'package:artist4u/services/get_bookings.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,8 +30,9 @@ class _UpcomingState extends State<Upcoming> {
 			builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
 				if(snapshot.hasData){
 					var data=snapshot.data.result;
+					// debugPrint((json.decode(data[0].eventdetails)[0]).toString());
 					debugPrint(data.length.toString());
-					return ListView.builder(
+          return ListView.builder(
 						itemCount: data.length,
 						itemBuilder: (BuildContext context, int index) { 
 							return InkWell(
@@ -47,12 +50,12 @@ class _UpcomingState extends State<Upcoming> {
 														child: Column(
 														children:<Widget>[
 															Expanded(flex:1,child:Text('')),
-															Expanded(flex:21,child: ArtistImage('artist_image/${upcoming[index]['image']}')),
+															// Expanded(flex:21,child: ArtistImage('artist_image/${upcoming[index]['image']}')),
 															Expanded(flex:1,child:Text('')),
 															Expanded(flex:3,child: ArtistName(data[index].artistname,MediaQuery.of(context).size.width*0.06)),
 															Expanded(flex:3,child: ArtistOccupation(data[index].artisttype,MediaQuery.of(context).size.width*0.04)),
-															Expanded(flex:3,child: StartTime(data[index].eventdetails[0].time.toString())),
-															Expanded(flex:3,child:StartDate(data[index].eventdetails[0].date)),
+															Expanded(flex:3,child: StartTime(json.decode(data[0].eventdetails)[0]['starttime'].toString())),
+															Expanded(flex:3,child:StartDate(json.decode(data[0].eventdetails)[0]['date'].toString())),
 															Expanded(flex:3,child: Amount(data[index].price)),
 															Expanded(flex:3,child: VenueAddress(data[index].location)),
 														]
@@ -70,16 +73,16 @@ class _UpcomingState extends State<Upcoming> {
 									child:Row(
 									mainAxisAlignment: MainAxisAlignment.spaceBetween,
 										children: <Widget>[
-											Expanded(flex:1,child: ArtistImage('artist_image/${upcoming[index]['image']}')),
+											// Expanded(flex:1,child: ArtistImage('artist_image/${upcoming[index]['image']}')),
 											Expanded(
 												flex:2,
 												child: Column(
 													children: <Widget>[
 														Align(alignment:Alignment.topRight,child: ArtistName(data[index].artistname,MediaQuery.of(context).size.width*0.045)),
 														ArtistOccupation(data[index].artisttype,MediaQuery.of(context).size.width*0.04),
-														Align(alignment:Alignment.topRight,child:StartTime(data[index].eventdetails[0].time)),
-														Align(alignment:Alignment.topRight,child:StartDate(data[index].eventdetails[0].date)),
-														Align(alignment:Alignment.topRight,child:Amount(data[index].location)),
+														Align(alignment:Alignment.topRight,child:StartTime(json.decode(data[0].eventdetails)[0]['starttime'].toString())),
+														Align(alignment:Alignment.topRight,child:StartDate(json.decode(data[0].eventdetails)[0]['date'].toString())),
+														Align(alignment:Alignment.topRight,child:Amount(data[index].price)),
 														Align(alignment:Alignment.topRight,child:CancelButton())
 													],
 												),
