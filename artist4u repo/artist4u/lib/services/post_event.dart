@@ -3,20 +3,19 @@ import 'package:artist4u/modals/post_event.dart';
 // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../const.dart';
 class PostEvent{
 	Future<PostEventmodal> postEvent(
-    String artistid,
-    String userid,
     String artistname,
-    String username,
     String artistype,
     String typeofevent,
     String gatheringsize,
     List<Map<dynamic, dynamic>> eventdetail,
     String location,
     String requiements,
+    String refercode,
     String price,
 
   ) async{
@@ -25,24 +24,28 @@ class PostEvent{
 		var postEventmodal = null;
 		var url = 'http://$ip:3000/events/addevent';
 		try {
+			Map<String,dynamic> userdata;
+			userdata=await getUserData();
+			debugPrint(userdata.toString());
 			var response = await client.post(url,
-       headers:{
-          "Authorization":"bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJAZ21haWwuY29tIiwiaWQiOiI1ZjgzNGNkOTA0ZDM2NjI4MjhlNzk2MjIiLCJwaG9uZSI6Ijk5OTA1MDA0MTUiLCJpYXQiOjE2MDI5MzQ0NTIsImV4cCI6MTYwMjk0ODg1Mn0.nuCSbHPFlQA-nfBWBzNuNC-VbTp2AZlNiMX1z7ijyEg"
-        },
-        body:{
-          "artistid":artistid,
-          "userid": userid,
-          "artistname": artistname,
-          "username": username,
-          "artisttype": artistype,
-          "typesofevent": typeofevent,
-          "gatheringsize": gatheringsize,
-          "eventdetails": jsonEncode(eventdetail),
-          "location": location,
-          "requiements": requiements,
-          "price": price,
-        }
-      );
+			headers:{
+			"Authorization":"bearer ${userdata['token']}"
+			},
+			body:{
+			"artistid":userdata['artistid'],
+			"userid": userdata['_id'],
+			"artistname": artistname,
+			"username": userdata['name'],
+			"artisttype": artistype,
+			"typesofevent": typeofevent,
+			"gatheringsize": gatheringsize,
+			"eventdetails": jsonEncode(eventdetail),
+			"location": location,
+			"requiements": requiements,
+			"refercode":refercode,
+			"price": price,
+			}
+		);
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
 				postEventmodal = PostEventmodal.fromJson(jsonResponse);
@@ -59,3 +62,15 @@ class PostEvent{
 		return postEventmodal;
 	}
 }
+
+Future<Map<String,dynamic>> getUserData() async{
+	SharedPreferences userdata=await SharedPreferences.getInstance();
+	Map<String,dynamic> user={
+		"token":userdata.getString('token'),
+		"artistid":userdata.getString('artistid'),
+		"_id":userdata.getString('_id'),
+		"name":userdata.getString('name'),
+	};
+	// await userdata.clear();
+	return user;
+}  

@@ -33,6 +33,7 @@ class _BookNowContentState extends State<BookNowContent> {
 	var _currentSliderValue=0.0;
 	var requirements = TextEditingController();
 	var location = TextEditingController();
+  var refercode=TextEditingController();
 	Widget build(BuildContext context) {
 		return Scaffold(
 			body: ListView(
@@ -468,6 +469,20 @@ class _BookNowContentState extends State<BookNowContent> {
 									),
 								),
 							),
+
+							Container(
+								margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*0.01),
+								child: TextField(
+									controller:refercode,
+									decoration: InputDecoration(
+										hintText: "Enter Refer Code",
+										border: OutlineInputBorder(
+										borderRadius: BorderRadius.all(Radius.circular(10.0)),
+										borderSide: BorderSide(color: Colors.grey),
+										),
+									),
+								),
+							),
 						],
 					),
 				]
@@ -559,16 +574,14 @@ class _BookNowContentState extends State<BookNowContent> {
 									onPressed: () async{
           // ignore: unused_local_variable
 										final PostEventmodal event=await PostEvent().postEvent(
-											'5f8adc5320460b1bf4a1cea0',//artistid
-											'5f834cd904d3662828e79622',//userid
 											widget.artistname,
-											'abc',//username
 											widget.artisttype,
 											selectedevent.toString(),
 											_selectedGathering.toString(),
 											eventsdate,
 											location.text,
 											requirements.text,
+											refercode.text,
 											'${(price*eventprice*gatheringprice).toString()}'
           // ignore: missing_return
 										).then((PostEventmodal result){

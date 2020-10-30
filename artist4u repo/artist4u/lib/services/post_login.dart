@@ -34,7 +34,7 @@ class PostLogin{
 				userdata.setBool('isartist', jsonResponse['detail']['isartist']);
 				// userdata.setString('otp', jsonResponse['token']);
 				userdata.setString('userbookings', json.encode(jsonResponse['detail']['mybookings']));
-				// // userdata.setString('_id', jsonResponse['detail']['_id']);
+				userdata.setString('_id', jsonResponse['detail']['_id']);
 				userdata.setString('name', jsonResponse['detail']['name']);
 				userdata.setString('email', jsonResponse['detail']['email']);
 				userdata.setString('phone', jsonResponse['detail']['phone']);
@@ -74,7 +74,7 @@ class PostLogin{
 				userdata.setBool('isartist', jsonResponse['detail']['isartist']);
 				// userdata.setString('otp', jsonResponse['token']);
 				userdata.setString('userbookings', json.encode(jsonResponse['detail']['mybookings']));
-				// // userdata.setString('_id', jsonResponse['detail']['_id']);
+				userdata.setString('_id', jsonResponse['detail']['_id']);
 				userdata.setString('name', jsonResponse['detail']['name']);
 				userdata.setString('email', jsonResponse['detail']['email']);
 				userdata.setString('phone', jsonResponse['detail']['phone']);

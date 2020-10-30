@@ -3,6 +3,7 @@ import 'package:artist4u/modals/artistbio_modal.dart';
 // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../const.dart';
 class PostArtistBio{
@@ -41,8 +42,12 @@ class PostArtistBio{
 		var artistBioModal = null;
 		var url = 'http://$ip:3000/artistbio/add_artistbio/$artist_type';
 		try {
+      Map<String,dynamic> userdata;
+      userdata=await getUserData();
+      debugPrint('$userdata');
 			var response = await client.post(url,body:{
 				"name":name,
+        "userid":userdata['_id'],
 				"artist_type":artist_type,
         "experience":experience,
 				"gender":gender,
@@ -73,7 +78,10 @@ class PostArtistBio{
 			});
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
-				// debugPrint(jsonResponse.toString());
+        SharedPreferences userdata = await SharedPreferences.getInstance();
+        userdata.setBool('isartist', true);
+        userdata.setString('artistid',jsonResponse['_id']);
+				// debugPrint(jsonResponse['_id'].toString());
 				artistBioModal = ArtistBioModal.fromJson(jsonResponse);
 				// debugPrint("model"+artistTypeModel.toString());
 			}
@@ -83,3 +91,12 @@ class PostArtistBio{
 		return artistBioModal;
 	}
 }
+Future<Map<String,dynamic>> getUserData() async{
+	SharedPreferences userdata=await SharedPreferences.getInstance();
+	Map<String,dynamic> user={
+		"token":userdata.getString('token'),
+		"_id":userdata.getString('_id'),
+	};
+	// await userdata.clear();
+	return user;
+}  

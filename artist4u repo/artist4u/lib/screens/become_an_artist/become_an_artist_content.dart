@@ -1497,7 +1497,7 @@ class _ArtistFormState extends State<ArtistForm> {
 									IFSC.text,
 									agreed.toString()
 								)
-        // ignore: missing_return
+        						// ignore: missing_return
 								.then((ArtistBioModal value){
 									debugPrint(artist_type.text);
 									uploadimage(_profileimage,'profile',artist_type.text,value.id);
