@@ -44,6 +44,7 @@ class GetArtistBioModal {
         this.v,
         this.profile,
         this.idproof,
+        this.leaderboard
     });
 
     List<Idproof> gallery;
@@ -80,6 +81,7 @@ class GetArtistBioModal {
     int v;
     Idproof profile;
     Idproof idproof;
+    int leaderboard;
 
     factory GetArtistBioModal.fromJson(Map<String, dynamic> json) => GetArtistBioModal(
         gallery: List<Idproof>.from(json["gallery"].map((x) => Idproof.fromJson(x))),
@@ -115,6 +117,7 @@ class GetArtistBioModal {
         v: json["__v"],
         profile: Idproof.fromJson(json["profile"]),
         idproof: Idproof.fromJson(json["idproof"]),
+        leaderboard:json["leaderboard"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -151,6 +154,7 @@ class GetArtistBioModal {
         "__v": v,
         "profile": profile.toJson(),
         "idproof": idproof.toJson(),
+        "leaderboard":leaderboard
     };
 }
 

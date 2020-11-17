@@ -39,6 +39,9 @@ class Result {
         this.status,
         this.price,
         this.refercode,
+        this.cancelledby,
+        this.artistcompensation,
+        this.bookingid
     });
 
     String artistid;
@@ -54,6 +57,9 @@ class Result {
     String status;
     String price;
     String refercode;
+    String cancelledby;
+    String artistcompensation;
+    String bookingid;
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
         artistid: json["artistid"],
@@ -69,6 +75,9 @@ class Result {
         status: json["status"],
         price: json["price"],
         refercode: json["refercode"],
+        cancelledby:json["cancelledby"],
+        artistcompensation:json["artistcompensation"],
+        bookingid:json["bookingid"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -85,5 +94,8 @@ class Result {
         "status": status,
         "price": price,
         "refercode": refercode,
+        "cancelledby":cancelledby,
+        "artistcompensation":artistcompensation,
+        "bookingid":bookingid
     };
 }

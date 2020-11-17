@@ -19,7 +19,7 @@ class GetBooking{
 			var response = await client.get(url,headers: {'Authorization':"bearer ${userdata['token']}"});
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
-				// debugPrint(jsonResponse.toString());
+				debugPrint(jsonResponse.toString());
 				bookingModal = GetBookingModal.fromJson(jsonResponse);
 				// debugPrint("model"+bookingModal);
 			}

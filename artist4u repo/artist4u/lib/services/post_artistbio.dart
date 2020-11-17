@@ -44,7 +44,7 @@ class PostArtistBio{
 		try {
       Map<String,dynamic> userdata;
       userdata=await getUserData();
-      debugPrint('$userdata');
+      // debugPrint('$userdata');
 			var response = await client.post(url,body:{
 				"name":name,
         "userid":userdata['_id'],
@@ -78,6 +78,7 @@ class PostArtistBio{
 			});
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
+        debugPrint('$jsonResponse');
         SharedPreferences userdata = await SharedPreferences.getInstance();
         userdata.setBool('isartist', true);
         userdata.setString('artistid',jsonResponse['_id']);

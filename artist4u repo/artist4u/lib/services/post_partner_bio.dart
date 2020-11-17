@@ -3,6 +3,7 @@ import 'package:artist4u/modals/post_partner_modal.dart';
 // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../const.dart';
 class PostPartnerBio{
@@ -28,9 +29,11 @@ class PostPartnerBio{
 		var postPartnerBioModal = null;
 		var url = 'http://$ip:3000/partner/addpartner';
 		try {
+      Map<String,dynamic> userdata;
+      userdata=await getUserData();
 			var response = await client.post(url,
        headers:{
-          "Authorization":"bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJAZ21haWwuY29tIiwiaWQiOiI1ZjgzNGNkOTA0ZDM2NjI4MjhlNzk2MjIiLCJwaG9uZSI6Ijk5OTA1MDA0MTUiLCJpYXQiOjE2MDI1ODgyMDksImV4cCI6MTYwMjYwMjYwOX0.PHLZzrdV1J10G5FKWiKmPgwqVliFzuQgdA73NV6hI_0"
+          "Authorization":"bearer ${userdata['token']}"
         },
         body:{
           "name":name,
@@ -51,6 +54,8 @@ class PostPartnerBio{
       );
 			if (response.statusCode == 201) {
 				var jsonResponse = json.decode(response.body);
+        SharedPreferences userdata = await SharedPreferences.getInstance();
+        userdata.setBool('ispartner', true);
 				// debugPrint(jsonResponse.toString());
 				postPartnerBioModal = PostPartnerBioModal.fromJson(jsonResponse);
 				// debugPrint("model"+artistTypeModel.toString());
@@ -66,3 +71,12 @@ class PostPartnerBio{
 		return postPartnerBioModal;
 	}
 }
+Future<Map<String,dynamic>> getUserData() async{
+	SharedPreferences userdata=await SharedPreferences.getInstance();
+	Map<String,dynamic> user={
+		"token":userdata.getString('token'),
+		"_id":userdata.getString('_id'),
+	};
+	// await userdata.clear();
+	return user;
+} 

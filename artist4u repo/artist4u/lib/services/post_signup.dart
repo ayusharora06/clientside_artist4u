@@ -27,7 +27,7 @@ class PostSignup{
 			);
 			if (response.statusCode == 201) {
 				var jsonResponse = json.decode(response.body);
-				// debugPrint(jsonResponse['message'].toString());
+				// debugPrint(jsonResponse.toString());
 				SharedPreferences userdata = await SharedPreferences.getInstance();
         userdata.setString('token', jsonResponse['token']);
 				userdata.setString('message', jsonResponse['message']);

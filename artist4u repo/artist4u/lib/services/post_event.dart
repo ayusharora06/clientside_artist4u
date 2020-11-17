@@ -26,7 +26,7 @@ class PostEvent{
 		try {
 			Map<String,dynamic> userdata;
 			userdata=await getUserData();
-			debugPrint(userdata.toString());
+			// debugPrint(userdata.toString());
 			var response = await client.post(url,
 			headers:{
 			"Authorization":"bearer ${userdata['token']}"
@@ -48,6 +48,7 @@ class PostEvent{
 		);
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
+        debugPrint(jsonResponse.toString());
 				postEventmodal = PostEventmodal.fromJson(jsonResponse);
 				// debugPrint("model"+artistTypeModel.toString());
 			}
