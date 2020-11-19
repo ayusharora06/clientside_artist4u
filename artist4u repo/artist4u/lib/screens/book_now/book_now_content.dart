@@ -1,5 +1,7 @@
 import 'package:artist4u/modals/post_event.dart';
+import 'package:artist4u/modals/verify_refer_modal.dart';
 import 'package:artist4u/services/post_event.dart';
+import 'package:artist4u/services/post_verify_refer.dart';
 import 'package:flutter/cupertino.dart';
 // ignore: unused_import
 import 'dart:convert';
@@ -17,6 +19,7 @@ class BookNowContent extends StatefulWidget{
 }
 
 class _BookNowContentState extends State<BookNowContent> {
+	String verifiername='';
 	final List<String> typeofevent=['Charity','Wedding','Family Fucntion', 'Devotional','Corporate','inauguration ','Birthday', 'Seminar'];
 	final Map typeofeventprice={'Charity':16000.0,'Wedding':17000.0,'Family Fucntion':18000.0, 'Corporate':19000.0};
  // ignore: avoid_init_to_null
@@ -35,6 +38,7 @@ class _BookNowContentState extends State<BookNowContent> {
 	List<double> durationvalue=[];
 	var requirements = TextEditingController();
 	var location = TextEditingController();
+	
   var refercode=TextEditingController();
 	Widget build(BuildContext context) {
 		return Scaffold(
@@ -499,6 +503,22 @@ class _BookNowContentState extends State<BookNowContent> {
 											minWidth: MediaQuery.of(context).size.width*0.4,
 											child: FlatButton(
 												onPressed: () async{
+													// ignore: unused_local_variable
+													final VerifyReferModal event=await PostVerifyRefer().postVerifyRefer(
+														refercode.text
+													// ignore: missing_return
+													).then((VerifyReferModal result)async{
+														if(result!=null){
+															setState(() {
+															  verifiername=result.name;
+															  debugPrint(verifiername);
+															});
+														}else{
+															debugPrint('null');
+														}
+													});
+													setState(() {
+													});
 												},
 												color: Color.fromRGBO(104, 178, 160, 1),
 												child: Text(
@@ -513,6 +533,11 @@ class _BookNowContentState extends State<BookNowContent> {
 									),
 								],
 							),
+
+							Text(verifiername)
+								
+							
+
 						],
 					),
 				]
