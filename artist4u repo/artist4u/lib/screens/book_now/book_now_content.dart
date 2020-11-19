@@ -30,6 +30,7 @@ class _BookNowContentState extends State<BookNowContent> {
 		{'day':1,'date':null,'time':null,'duration':0.0}
 	];
 	var _selectedGathering;
+ // ignore: unused_field
 	var _currentSliderValue=0.0;
 	List<double> durationvalue=[];
 	var requirements = TextEditingController();
@@ -475,18 +476,42 @@ class _BookNowContentState extends State<BookNowContent> {
 								),
 							),
 
-							Container(
-								margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*0.01),
-								child: TextField(
-									controller:refercode,
-									decoration: InputDecoration(
-										hintText: "Enter Refer Code",
-										border: OutlineInputBorder(
-										borderRadius: BorderRadius.all(Radius.circular(10.0)),
-										borderSide: BorderSide(color: Colors.grey),
+							Row(
+								children: <Widget>[
+									Expanded(
+										child: Container(
+											margin: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*0.01),
+											child: TextField(
+												controller:refercode,
+												decoration: InputDecoration(
+													hintText: "Enter Refer Code",
+													border: OutlineInputBorder(
+													borderRadius: BorderRadius.all(Radius.circular(10.0)),
+													borderSide: BorderSide(color: Colors.grey),
+													),
+												),
+											),
 										),
 									),
-								),
+									Expanded(
+										child: ButtonTheme(
+											height: MediaQuery.of(context).size.height*0.075,
+											minWidth: MediaQuery.of(context).size.width*0.4,
+											child: FlatButton(
+												onPressed: () async{
+												},
+												color: Color.fromRGBO(104, 178, 160, 1),
+												child: Text(
+													'Verify',
+													style:  TextStyle(
+														color: Colors.white,
+														fontSize: MediaQuery.of(context).size.height*0.025,
+													),
+												)
+											),
+										),
+									),
+								],
 							),
 						],
 					),
@@ -577,8 +602,8 @@ class _BookNowContentState extends State<BookNowContent> {
 									// 	);
 									// },
 									onPressed: () async{
-                    debugPrint(eventsdate.toString());
-          // ignore: unused_local_variable
+										debugPrint(eventsdate.toString());
+										// ignore: unused_local_variable
 										final PostEventmodal event=await PostEvent().postEvent(
 											widget.artistname,
 											widget.artisttype,

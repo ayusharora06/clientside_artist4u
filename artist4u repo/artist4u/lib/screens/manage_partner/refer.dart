@@ -1,5 +1,7 @@
 import 'package:artist4u/modals/generate_refer.dart';
+// ignore: unused_import
 import 'package:artist4u/modals/get_booking_modal.dart';
+// ignore: unused_import
 import 'package:artist4u/services/get_bookings.dart';
 import 'package:artist4u/services/post_generate_refer.dart';
 import 'package:flutter/cupertino.dart';

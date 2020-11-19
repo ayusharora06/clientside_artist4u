@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:artist4u/modals/generate_refer.dart';
 import 'package:artist4u/modals/get_artist_bio.dart';// ignore: unused_import
+// ignore: unused_import
 import 'package:artist4u/modals/otp.dart';
+// ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

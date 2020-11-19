@@ -1,6 +1,8 @@
+// ignore: unused_import
 import 'package:artist4u/modals/otp.dart';
 import 'package:artist4u/modals/user_modal.dart';
 import 'package:artist4u/services/post_login.dart';
+// ignore: unused_import
 import 'package:artist4u/services/post_otp.dart';
 import 'package:artist4u/services/post_signup.dart';
 import 'package:flutter/cupertino.dart';
