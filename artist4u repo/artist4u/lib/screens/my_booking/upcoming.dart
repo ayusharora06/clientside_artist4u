@@ -31,16 +31,19 @@ class _UpcomingState extends State<Upcoming> {
 				if(snapshot.hasData){
 					var data=snapshot.data.result;
 					// debugPrint((json.decode(data[0].eventdetails)[0]).toString());
-					debugPrint(data.length.toString());
-          return ListView.builder(
+					// debugPrint(data.length.toString());
+					// return Text("a");
+          			return ListView.builder(
 						itemCount: data.length,
 						itemBuilder: (BuildContext context, int index) { 
+							// return Text(index.toString());
 							return InkWell(
 								onTap: (){
 									showDialog(
 										barrierDismissible: true,
 										context: context,  
-										builder: (BuildContext context) {  
+										builder: (BuildContext context) {
+											// debugPrint(data[index].cancelreason);  
 											return Center(
 												child: Container(  
 													color: Colors.white,
@@ -57,7 +60,7 @@ class _UpcomingState extends State<Upcoming> {
 															Expanded(flex:3,child: StartTime(json.decode(data[0].eventdetails)[0]['starttime'].toString())),
 															Expanded(flex:3,child:StartDate(json.decode(data[0].eventdetails)[0]['date'].toString())),
 															Expanded(flex:3,child: Amount(data[index].price)),
-															Expanded(flex:3,child: VenueAddress(data[index].location)),
+															// Expanded(flex:3,child: VenueAddress(data[index].location)),
 														]
 													),
 													), 

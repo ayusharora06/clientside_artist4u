@@ -59,7 +59,7 @@ class _HomeDrawerCollectionState extends State<HomeDrawerCollection> {
 								):ListTile(
 									title:Text('Manage Artist account'),
 									trailing: Icon(Icons.keyboard_arrow_right),
-									onTap: (){},
+									onTap: (){Navigator.pushNamed(context, '/manageartist');},
 								);
 							}else{
 								return Center(child:CircularProgressIndicator());

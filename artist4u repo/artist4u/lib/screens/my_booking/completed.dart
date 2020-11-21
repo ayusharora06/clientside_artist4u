@@ -1,54 +1,95 @@
+import 'dart:convert';
+
+import 'package:artist4u/modals/get_booking_modal.dart';
+import 'package:artist4u/services/get_bookings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class Completed extends StatelessWidget{
+class Completed extends StatefulWidget{
+  @override
+  _CompletedState createState() => _CompletedState();
+}
+
+class _CompletedState extends State<Completed> {
 	List<Map<String, Object>> completed=[
 		{'name':'ayush','image':'ayush.jpg','venuename':'Crown Plaza', 'venueaddress':'Twin, District Centre, Sector 10, Rohini, New Delhi, Delhi 110085', 'amount':'15000','startdate':'15/10/2020','starttime':'10:00','review':'Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome '},
 		{'name':'shubham','image':'shubham.jpg','venuename':'Crown Plaza', 'venueaddress':'Twin, District Centre, Sector 10, Rohini, New Delhi, Delhi 110085', 'amount':'15000','startdate':'15/10/2020','starttime':'10:00','review':null},
 		{'name':'garvit','image':'garvit.jpg','venuename':'Crown Plaza', 'venueaddress':'Twin, District Centre, Sector 10, Rohini, New Delhi, Delhi 110085', 'amount':'15000','startdate':'15/10/2020','starttime':'10:00','review':'Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome '}
 	];
+
+	Future<GetBookingModal> _booking;
+
+	@override
+	void initState(){
+		_booking = GetBooking().getBookingCompleted();
+		super.initState();
+	}
+
 	Widget build(BuildContext context) {
-		return ListView.builder(
-			itemCount: completed.length,
-			itemBuilder: (BuildContext context, int index) { 
-				return InkWell(
-					onTap: (){
-						showDialog(
-							barrierDismissible: true,
-							context: context,  
-							builder: (BuildContext context) {  
-								return AlertDialog(
-									content: completed[index]['review']!=null?Review(completed[index]['review'],partial: false,):Text('No Review Given')
-								);
-							}
-						);
-					},
-					child: Card(
-				    	shape: RoundedRectangleBorder(
-				    		side: BorderSide(color: Colors.blueGrey, width: 2.0),
-				    	),
-				    	child:Row(
-				  		mainAxisAlignment: MainAxisAlignment.spaceBetween,
-				    	  	children: <Widget>[
-				    	  		Expanded(flex:1,child: ArtistImage('artist_image/${completed[index]['image']}')),
-				    	  		Expanded(
-				    	  			flex:2,
-				    	  			child: Column(
-				    	  				children: <Widget>[
-				    	  					Align(alignment:Alignment.topRight,child: ArtistName(completed[index]['name'])),
-				    	  					Align(alignment:Alignment.topRight,child:VenueName(completed[index]['venuename'])),
-				  							Align(alignment:Alignment.topRight,child:StartTime(completed[index]['starttime'])),
-				  							Align(alignment:Alignment.topRight,child:StartDate(completed[index]['startdate'])),
-				    	  					Align(alignment:Alignment.topRight,child:Amount(completed[index]['amount'])),
-				    	  					Align(alignment:Alignment.topRight,child:completed[index]['review']==null?ReviewButton():Review(completed[index]['review'],partial:true))
-				    	  				],
-				    	  			),
-				    	  		)
-				    	  	],
-				    	  )
-				    ),
-				);
+		return FutureBuilder<GetBookingModal>(
+			future: _booking,
+			builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+				if(snapshot.hasData){
+					var data=snapshot.data.result;
+					// debugPrint((json.decode(data[0].eventdetails)[0]).toString());
+					// debugPrint(data.length.toString());
+					// return Text("a");
+          			return ListView.builder(
+						itemCount: data.length,
+						itemBuilder: (BuildContext context, int index) { 
+							// return Text(index.toString());
+							return InkWell(
+								onTap: (){
+									showDialog(
+										barrierDismissible: true,
+										context: context,  
+										builder: (BuildContext context) {
+											// debugPrint(data[index].cancelreason);  
+											return Center(
+												child: Container(  
+													color: Colors.white,
+													width: MediaQuery.of(context).size.width*0.95,
+													height:MediaQuery.of(context).size.width*1.1,
+													child: Material(
+														child: Text(data[index].review)
+													), 
+												)
+											);
+										}
+									);
+								},
+								child: Card(
+									shape: RoundedRectangleBorder(
+										side: BorderSide(color: Colors.blueGrey, width: 2.0),
+									),
+									child:Row(
+									mainAxisAlignment: MainAxisAlignment.spaceBetween,
+										children: <Widget>[
+											// Expanded(flex:1,child: ArtistImage('artist_image/${upcoming[index]['image']}')),
+											Expanded(
+												flex:2,
+												child: Column(
+													children: <Widget>[
+														Align(alignment:Alignment.topRight,child: ArtistName(data[index].artistname,MediaQuery.of(context).size.width*0.045)),
+														ArtistOccupation(data[index].artisttype,MediaQuery.of(context).size.width*0.04),
+														Align(alignment:Alignment.topRight,child:StartTime(json.decode(data[0].eventdetails)[0]['starttime'].toString())),
+														Align(alignment:Alignment.topRight,child:StartDate(json.decode(data[0].eventdetails)[0]['date'].toString())),
+														Align(alignment:Alignment.topRight,child:Amount(data[index].price)),
+														Align(alignment:Alignment.topRight,child:Review(data[index].review)),
+														Align(alignment:Alignment.topRight,child:ReviewButton())
+													],
+												),
+											)
+										],
+									)
+								),
+							);
+						}
+					);
+				}else{
+					return Center(child: CircularProgressIndicator());
+				}
 			}
 		);
 	}
@@ -69,16 +110,34 @@ class ArtistImage extends StatelessWidget{
 // ignore: must_be_immutable
 class ArtistName extends StatelessWidget{
 	String name;
-	ArtistName(this.name);
+	var size;
+	ArtistName(this.name,this.size);
 	@override
 	Widget build(BuildContext context) {
 		return Text(
 			name,
 			style: TextStyle(
-				color: Color.fromRGBO(2, 0, 110, 1),
+				color: Colors.black,
 				fontWeight: FontWeight.w500,
-				fontSize: 18,
-				fontFamily: 'Sriracha-Regular'
+				fontSize: size,
+				fontFamily: 'SpecialElite-Regular'
+			),
+		);
+	}
+}
+// ignore: must_be_immutable
+class ArtistOccupation extends StatelessWidget{
+	String name;
+	var size;
+	ArtistOccupation(this.name,this.size);
+	@override
+	Widget build(BuildContext context) {
+		return Text(
+			"($name)",
+			style: TextStyle(
+				color: Colors.black,
+				fontSize: size,
+				fontStyle: FontStyle.italic
 			),
 		);
 	}
@@ -207,6 +266,6 @@ class Review extends StatelessWidget{
 			// 	fontSize: 18,
 			// 	fontFamily: 'Sriracha-Regular'
 			// ),
-		):Text(review.substring(0,25));
+		):Text(review.substring(0,15));
 	}
 }

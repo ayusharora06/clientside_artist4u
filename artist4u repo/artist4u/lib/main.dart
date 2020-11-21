@@ -10,6 +10,7 @@ import 'package:artist4u/screens/favorite/favorite_page.dart';
 import 'package:artist4u/screens/home_screen/home_screen.dart';
 import 'package:artist4u/screens/legal/legal_page.dart';
 import 'package:artist4u/screens/login/login.dart';
+import 'package:artist4u/screens/manage_artist/manage_artist_page.dart';
 import 'package:artist4u/screens/manage_partner/manage_partner_page.dart';
 import 'package:artist4u/screens/my_account/my_account_page.dart';
 import 'package:artist4u/screens/my_booking/my_booking_page.dart';
@@ -55,7 +56,8 @@ class MyApp extends StatelessWidget {
 				'/favorites':(context)=>FavoritePage(),
 				'/becomeapartner':(context)=>BecomeAPartnerPage(),
 				'/ourpartners':(context)=>OurPartners(),
-				'/managepartner':(context)=>ManagePartnerPage()
+				'/managepartner':(context)=>ManagePartnerPage(),
+				'/manageartist':(context)=>ManageArtistPage()
 			},
       		// home:Loading()
 		);
