@@ -6,23 +6,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class Completed extends StatefulWidget{
+class Bookings extends StatefulWidget{
   @override
-  _CompletedState createState() => _CompletedState();
+  _BookingsState createState() => _BookingsState();
 }
 
-class _CompletedState extends State<Completed> {
-	List<Map<String, Object>> completed=[
-		{'name':'ayush','image':'ayush.jpg','venuename':'Crown Plaza', 'venueaddress':'Twin, District Centre, Sector 10, Rohini, New Delhi, Delhi 110085', 'amount':'15000','startdate':'15/10/2020','starttime':'10:00','review':'Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome '},
-		{'name':'shubham','image':'shubham.jpg','venuename':'Crown Plaza', 'venueaddress':'Twin, District Centre, Sector 10, Rohini, New Delhi, Delhi 110085', 'amount':'15000','startdate':'15/10/2020','starttime':'10:00','review':null},
-		{'name':'garvit','image':'garvit.jpg','venuename':'Crown Plaza', 'venueaddress':'Twin, District Centre, Sector 10, Rohini, New Delhi, Delhi 110085', 'amount':'15000','startdate':'15/10/2020','starttime':'10:00','review':'Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome Awesome '}
-	];
+class _BookingsState extends State<Bookings> {
 
 	Future<GetBookingModal> _booking;
 
 	@override
 	void initState(){
-		_booking = GetBooking().getBookingCompleted();
+		_booking = GetBooking().getBookingArtist();
 		super.initState();
 	}
 
@@ -52,7 +47,19 @@ class _CompletedState extends State<Completed> {
 													width: MediaQuery.of(context).size.width*0.95,
 													height:MediaQuery.of(context).size.width*1.1,
 													child: Material(
-														child: Text(data[index].review)
+														child: Column(
+														children:<Widget>[
+															Expanded(flex:1,child:Text('')),
+															// Expanded(flex:21,child: ArtistImage('artist_image/${upcoming[index]['image']}')),
+															Expanded(flex:1,child:Text('')),
+															Expanded(flex:3,child: ArtistName(data[index].artistname,MediaQuery.of(context).size.width*0.06)),
+															Expanded(flex:3,child: ArtistOccupation(data[index].artisttype,MediaQuery.of(context).size.width*0.04)),
+															Expanded(flex:3,child: StartTime(json.decode(data[0].eventdetails)[0]['starttime'].toString())),
+															Expanded(flex:3,child:StartDate(json.decode(data[0].eventdetails)[0]['date'].toString())),
+															Expanded(flex:3,child: Amount(data[index].price)),
+															// Expanded(flex:3,child: VenueAddress(data[index].location)),
+														]
+													),
 													), 
 												)
 											);
@@ -76,8 +83,7 @@ class _CompletedState extends State<Completed> {
 														Align(alignment:Alignment.topRight,child:StartTime(json.decode(data[0].eventdetails)[0]['starttime'].toString())),
 														Align(alignment:Alignment.topRight,child:StartDate(json.decode(data[0].eventdetails)[0]['date'].toString())),
 														Align(alignment:Alignment.topRight,child:Amount(data[index].price)),
-														Align(alignment:Alignment.topRight,child:Review(data[index].review)),
-														Align(alignment:Alignment.topRight,child:ReviewButton())
+														Align(alignment:Alignment.topRight,child:Text(data[index].status))
 													],
 												),
 											)
@@ -94,7 +100,7 @@ class _CompletedState extends State<Completed> {
 		);
 	}
 }
-// ignore: must_be_immutable
+
 class ArtistImage extends StatelessWidget{
 	String image;
 	ArtistImage(this.image);
@@ -125,6 +131,7 @@ class ArtistName extends StatelessWidget{
 		);
 	}
 }
+
 // ignore: must_be_immutable
 class ArtistOccupation extends StatelessWidget{
 	String name;
@@ -149,14 +156,23 @@ class VenueName extends StatelessWidget{
 	VenueName(this.venuename);
 	@override
 	Widget build(BuildContext context) {
-		return Text(
-			venuename,
-			// style: TextStyle(
-			// 	color: Color.fromRGBO(2, 0, 110, 1),
-			// 	fontWeight: FontWeight.w500,
-			// 	fontSize: 18,
-			// 	fontFamily: 'Sriracha-Regular'
-			// ),
+		return Row(
+			mainAxisAlignment: MainAxisAlignment.end,
+			children: [
+				Text(
+					'Venue:'
+				),
+				Icon(Icons.home),
+				Text(
+					venuename,
+					// style: TextStyle(
+					// 	color: Color.fromRGBO(2, 0, 110, 1),
+					// 	fontWeight: FontWeight.w500,
+					// 	fontSize: 18,
+					// 	fontFamily: 'Sriracha-Regular'
+					// ),
+				),
+			],
 		);
 	}
 }
@@ -167,14 +183,33 @@ class VenueAddress extends StatelessWidget{
 	VenueAddress(this.venueaddress);
 	@override
 	Widget build(BuildContext context) {
-		return Text(
-			venueaddress,
-			// style: TextStyle(
-			// 	color: Color.fromRGBO(2, 0, 110, 1),
-			// 	fontWeight: FontWeight.w500,
-			// 	fontSize: 18,
-			// 	fontFamily: 'Sriracha-Regular'
-			// ),
+		return Row(
+			mainAxisAlignment: MainAxisAlignment.end,
+			children: [
+				Expanded(
+				  child: Text(
+				  	'Address:'
+				  ),
+				),
+				Expanded(
+					child:Icon(Icons.place)
+				),
+				Expanded(
+				  child: Wrap(
+				    children: [
+				      Text(
+				      	venueaddress,
+				      	// style: TextStyle(
+				      	// 	color: Color.fromRGBO(2, 0, 110, 1),
+				      	// 	fontWeight: FontWeight.w500,
+				      	// 	fontSize: 18,
+				      	// 	fontFamily: 'Sriracha-Regular'
+				      	// ),
+				      ),
+				    ],
+				  ),
+				),
+			],
 		);
 	}
 }
@@ -185,35 +220,27 @@ class Amount extends StatelessWidget{
 	Amount(this.amount);
 	@override
 	Widget build(BuildContext context) {
-		return Text(
-			'Rs $amount',
-			// style: TextStyle(
-			// 	color: Color.fromRGBO(2, 0, 110, 1),
-			// 	fontWeight: FontWeight.w500,
-			// 	fontSize: 18,
-			// 	fontFamily: 'Sriracha-Regular'
-			// ),
+		return Row(
+			mainAxisAlignment:MainAxisAlignment.end,
+			children: [
+				Text(
+					'Amount:'
+				),
+				Icon(Icons.attach_money),
+				Text(
+					'Rs $amount',
+					// style: TextStyle(
+					// 	color: Color.fromRGBO(2, 0, 110, 1),
+					// 	fontWeight: FontWeight.w500,
+					// 	fontSize: 18,
+					// 	fontFamily: 'Sriracha-Regular'
+					// ),
+				),
+			],
 		);
 	}
 }
 
-class ReviewButton extends StatelessWidget{
-	@override
-	Widget build(BuildContext context){
-		return FlatButton(
-			color: Colors.blueGrey,
-			child: Text(
-				'Write a Review',
-				style: TextStyle(
-					color: Colors.white
-				),
-			),
-			onPressed: (){
-				debugPrint('button tapped');
-			},
-		);
-	}
-}
 
 // ignore: must_be_immutable
 class StartDate extends StatelessWidget{
@@ -221,14 +248,23 @@ class StartDate extends StatelessWidget{
 	StartDate(this.date);
 	@override
 	Widget build(BuildContext context) {
-		return Text(
-			date,
-			// style: TextStyle(
-			// 	color: Color.fromRGBO(2, 0, 110, 1),
-			// 	fontWeight: FontWeight.w500,
-			// 	fontSize: 18,
-			// 	fontFamily: 'Sriracha-Regular'
-			// ),
+		return Row(
+			mainAxisAlignment:MainAxisAlignment.end,
+			children: [
+				Text(
+					'Date:'
+				),
+				Icon(Icons.event_note),
+				Text(
+					date,
+					// style: TextStyle(
+					// 	color: Color.fromRGBO(2, 0, 110, 1),
+					// 	fontWeight: FontWeight.w500,
+					// 	fontSize: 18,
+					// 	fontFamily: 'Sriracha-Regular'
+					// ),
+				),
+			],
 		);
 	}
 }
@@ -239,33 +275,38 @@ class StartTime extends StatelessWidget{
 	StartTime(this.time);
 	@override
 	Widget build(BuildContext context) {
-		return Text(
-			time,
-			// style: TextStyle(
-			// 	color: Color.fromRGBO(2, 0, 110, 1),
-			// 	fontWeight: FontWeight.w500,
-			// 	fontSize: 18,
-			// 	fontFamily: 'Sriracha-Regular'
-			// ),
+		return Row(
+			mainAxisAlignment: MainAxisAlignment.spaceBetween,
+			children: [
+				Expanded(
+					child: Text(''),
+				),
+				Expanded(
+				  child: Row(
+				  	children: [
+				  		Text(
+				  			'Time:'
+				  		),
+				  		Icon(Icons.timer),
+				  	],
+				  ),
+				),
+				
+				Expanded(
+				  child: Align(
+					  alignment: Alignment.bottomRight,
+				    child: Text(
+				    	time,
+				    	// style: TextStyle(
+				    	// 	color: Color.fromRGBO(2, 0, 110, 1),
+				    	// 	fontWeight: FontWeight.w500,
+				    	// 	fontSize: 18,
+				    	// 	fontFamily: 'Sriracha-Regular'
+				    	// ),
+				    ),
+				  ),
+				),
+			],
 		);
-	}
-}
-
-// ignore: must_be_immutable
-class Review extends StatelessWidget{
-	String review;
-	bool partial;
-	Review(this.review,{this.partial});
-	@override
-	Widget build(BuildContext context) {
-		return partial==false?Text(
-			review,
-			// style: TextStyle(
-			// 	color: Color.fromRGBO(2, 0, 110, 1),
-			// 	fontWeight: FontWeight.w500,
-			// 	fontSize: 18,
-			// 	fontFamily: 'Sriracha-Regular'
-			// ),
-		):review.length>15?Text(review.substring(0,15)):Text(review);
 	}
 }

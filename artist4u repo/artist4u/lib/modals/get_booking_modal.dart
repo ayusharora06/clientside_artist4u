@@ -62,7 +62,7 @@ class Result {
     String price;
     String refercode;
     String cancelledby;
-    int artistcompensation;
+    String artistcompensation;
     int bookingid;
     String cancelreason;
     String cancelreasondescription;

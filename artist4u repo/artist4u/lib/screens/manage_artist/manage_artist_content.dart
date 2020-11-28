@@ -1,9 +1,9 @@
 import 'package:artist4u/drawers/home_drawer.dart';
+import 'package:artist4u/screens/manage_artist/bookings.dart';
 import 'package:artist4u/screens/manage_partner/refer.dart';
 import 'package:artist4u/screens/my_booking/canelled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'completed.dart';
 
 class ManageArtistContent extends StatelessWidget{
 	Widget build(BuildContext context) {
@@ -31,12 +31,12 @@ class ManageArtistContent extends StatelessWidget{
 							Tab(text: 'Profile',),
 						],
 					),
-					title: Text('Manage Partner'),
+					title: Text('Manage Artist'),
 				),
 				body: TabBarView(
 					children: [
 						Refer(),
-						Completed(),
+						Bookings(),
 						Cancelled(),
 						// ArtistBio(title),
 						// ReviewList(),
