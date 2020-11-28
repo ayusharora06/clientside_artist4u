@@ -91,6 +91,28 @@ class GetBooking{
 		}
 		return bookingModal;
 	}
+
+  Future<GetBookingModal> getBookingPartner() async{
+		var client = http.Client();
+  		// ignore: avoid_init_to_null
+		var bookingModal = null;
+		var url = 'http://$ip:3000/events/partner/booking';
+		try {
+      Map<String,dynamic> userdata;
+			userdata=await getUserData();
+      // debugPrint(userdata['token']);
+			var response = await client.get(url,headers: {'Authorization':"bearer ${userdata['token']}"});
+			if (response.statusCode == 200) {
+				var jsonResponse = json.decode(response.body);
+				// debugPrint(jsonResponse.toString());
+				bookingModal = GetBookingModal.fromJson(jsonResponse);
+				// debugPrint("model"+bookingModal.toString());
+			}
+		}catch(Exception){
+			return bookingModal;
+		}
+		return bookingModal;
+	}
 }
 Future<Map<String,dynamic>> getUserData() async{
 	SharedPreferences userdata=await SharedPreferences.getInstance();

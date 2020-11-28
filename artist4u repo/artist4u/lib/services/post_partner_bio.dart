@@ -56,6 +56,7 @@ class PostPartnerBio{
 				var jsonResponse = json.decode(response.body);
         SharedPreferences userdata = await SharedPreferences.getInstance();
         userdata.setBool('ispartner', true);
+        userdata.setBool('partnerid', jsonResponse['partnerid']);
 				// debugPrint(jsonResponse.toString());
 				postPartnerBioModal = PostPartnerBioModal.fromJson(jsonResponse);
 				// debugPrint("model"+artistTypeModel.toString());

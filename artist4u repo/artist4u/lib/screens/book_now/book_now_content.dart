@@ -38,6 +38,8 @@ class _BookNowContentState extends State<BookNowContent> {
 	List<double> durationvalue=[];
 	var requirements = TextEditingController();
 	var location = TextEditingController();
+	String referedby='';
+	String partnerid='';
 	
   var refercode=TextEditingController();
 	Widget build(BuildContext context) {
@@ -505,13 +507,21 @@ class _BookNowContentState extends State<BookNowContent> {
 												onPressed: () async{
 													// ignore: unused_local_variable
 													final VerifyReferModal event=await PostVerifyRefer().postVerifyRefer(
-														refercode.text
+														refercode.text,
+
 													// ignore: missing_return
 													).then((VerifyReferModal result)async{
 														if(result!=null){
 															setState(() {
-															  verifiername=result.name;
-															  debugPrint(verifiername);
+																if(result.artistid==null){
+																	partnerid=result.partnerid;
+																	referedby='partner';
+																}else{
+																	// referedid=result.artistid;
+																	referedby='artist';
+																}
+																verifiername=result.name;
+															  	// print(result);
 															});
 														}else{
 															debugPrint('null');
@@ -638,7 +648,9 @@ class _BookNowContentState extends State<BookNowContent> {
 											location.text,
 											requirements.text,
 											refercode.text,
-											'${(price*eventprice*gatheringprice).toString()}'
+											'${(price*eventprice*gatheringprice).toString()}',
+											referedby,
+											partnerid
           // ignore: missing_return
 										).then((PostEventmodal result){
 											debugPrint(result.toString());

@@ -45,7 +45,9 @@ class Result {
         this.cancelreason,
         this.cancelreasondescription,
         this.review,
-        this.stars
+        this.stars,
+        this.referedby,
+        this.partnerid
     });
 
     String artistid;
@@ -68,6 +70,8 @@ class Result {
     String cancelreasondescription;
     String review;
     String stars;
+    String referedby;
+    String partnerid;
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
         artistid: json["artistid"],
@@ -89,7 +93,9 @@ class Result {
         cancelreason:json["cancelreason"],
         cancelreasondescription:json["cancelreasondescription"],
         review:json["review"],
-        stars:json["stars"]
+        stars:json["stars"],
+        referedby:json["referedby"],
+        partnerid:json["partnerid"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -112,6 +118,8 @@ class Result {
         "cancelreason":cancelreason,
         "cancelreasondescription":cancelreasondescription,
         "review":review,
-        "stars":stars
+        "stars":stars,
+        "referedby":referedby,
+        "partnerid":partnerid
     };
 }

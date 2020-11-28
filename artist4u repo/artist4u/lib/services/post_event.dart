@@ -17,6 +17,8 @@ class PostEvent{
     String requiements,
     String refercode,
     String price,
+    String referedby,
+    String partnerid
 
   ) async{
 		var client = http.Client();
@@ -44,6 +46,9 @@ class PostEvent{
 			"requiements": requiements,
 			"refercode":refercode,
 			"price": price,
+      "referedby":referedby,
+      "partnerid":partnerid
+
 			}
 		);
 			if (response.statusCode == 200) {
