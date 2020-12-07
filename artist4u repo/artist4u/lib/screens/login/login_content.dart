@@ -163,10 +163,22 @@ class _LoginAreaState extends State<LoginArea> {
 						final UserModal user=await PostLogin().postLoginPhone(
 							phonecontroller.text,
 							// phonecontroller.text
-						);
+						).then((UserModal result){
+							// debugPrint(result.toString());
+							if(result==null){
+								showDialog(
+									barrierDismissible: true,
+										context: context,  
+										builder: (BuildContext context) {  
+											return AlertDialog(content: Text("Something went wrong or phone number incorrect"),);
+										}
+								);
+							}
+						});
 						SharedPreferences userdata=await SharedPreferences.getInstance();
 						String islogedin=userdata.getString('message');
-						islogedin=='authenticated'?Navigator.pushNamed(context, '/home'):Center(child:CircularProgressIndicator());
+						islogedin=='authenticated'?Navigator.of(context)
+    .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false):Center(child:CircularProgressIndicator());
 					}, 
 					child: Text('Send OTP phone')
 				),
@@ -181,7 +193,18 @@ class _LoginAreaState extends State<LoginArea> {
 						final UserModal user=await PostLogin().postLoginEmail(
 							emailcontroller.text,
 							// phonecontroller.text
-						);
+						).then((UserModal result){
+							// debugPrint(result.toString());
+							if(result==null){
+								showDialog(
+									barrierDismissible: true,
+										context: context,  
+										builder: (BuildContext context) {  
+											return AlertDialog(content: Text("Something went wrong or email incorrect"),);
+										}
+								);
+							}
+						});
 						SharedPreferences userdata=await SharedPreferences.getInstance();
 						String islogedin=userdata.getString('message');
 						islogedin=='authenticated'?Navigator.pushNamed(context, '/home'):Center(child:CircularProgressIndicator()); 
@@ -279,7 +302,18 @@ class _SignUpArea extends State<SignUpArea> {
 							namecontroller.text,
 							emailcontroller.text,
 							phonecontroller.text
-						);
+						).then((UserModal result){
+							// debugPrint(result.toString());
+							if(result==null){
+								showDialog(
+									barrierDismissible: true,
+										context: context,  
+										builder: (BuildContext context) {  
+											return AlertDialog(content: Text("Something went wrong or couldnt get your info to server"),);
+										}
+								);
+							}
+						});
 						SharedPreferences userdata=await SharedPreferences.getInstance();
 						String islogedin=userdata.getString('message');
 						islogedin=='authenticated'?Navigator.pushNamed(context, '/home'):Center(child:CircularProgressIndicator()); 

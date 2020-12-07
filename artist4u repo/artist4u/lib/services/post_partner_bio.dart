@@ -9,7 +9,6 @@ import '../const.dart';
 class PostPartnerBio{
 	Future<PostPartnerBioModal> postPartnerBio(
 		String name,
-    String userid,
 		String phonenumber,
 		String email,
     String website,
@@ -37,7 +36,7 @@ class PostPartnerBio{
         },
         body:{
           "name":name,
-          "userid":userid,
+          "userid":userdata['_id'],
           "phonenumber":phonenumber,
           "email":email,
           "website":website,

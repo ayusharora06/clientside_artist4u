@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:artist4u/modals/post_partner_modal.dart';
+import 'package:artist4u/screens/manage_partner/manage_partner_page.dart';
 import 'package:artist4u/services/post_partner_bio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -527,7 +528,6 @@ class _PartnerFormState extends State<PartnerForm> {
         // ignore: unused_local_variable
 								final PostPartnerBioModal artistbio=await PostPartnerBio().postPartnerBio(
 									name.text,
-									"f7c57ecb6828e33ec663dd7",
 									phonenumber.text,
 									email.text,
 									website.text,
@@ -548,13 +548,15 @@ class _PartnerFormState extends State<PartnerForm> {
 										uploadimage(_proofimage,'idproof',"5f834cd904d3662828e79622");
 									// uploadimage(_proofimage,'idproof',artist_type.text,value.id);
 									// uploadgallary(filecontroller,artist_type.text,value.id);
-								});
+								}).then((value){
+                    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManagePartnerPage()), ModalRoute.withName('/home'));
+                });
 								setState(() {
+                  debugPrint("asd");
 								//   _artistBioModal=artistbio;
 								//   var artistid=artistbio.id.toString();
 								//   uploadimage(_profileimage,artist_type.text,artistid);
-								});
-
+                });
 							},
 							child: Text(
 								'Register',

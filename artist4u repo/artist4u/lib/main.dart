@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
 			debugShowCheckedModeBanner: false,
 			title: 'Artist4U',
 			routes: {
-        		'/':(context)=>Loading(),
+        '/':(context)=>Loading(),
 				'/login': (context) => Login(),
 				'/home':(context) => HomeScreen(),
 				'/artistlist':(context) => ArtistListPage(),
@@ -73,6 +73,7 @@ class _LoadingState extends State<Loading> {
 	@override
 	void initState(){
 		userdata=getUserData();
+    // debugPrint(userdata.toString());
 		super.initState();
 	}
 	@override
@@ -85,9 +86,10 @@ class _LoadingState extends State<Loading> {
 					builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
 						if(snapshot.hasData){
 							var data=snapshot.data;
-							// debugPrint(data.toString());
+							debugPrint("$data");
 							return data['token']==null?Login():HomeScreen();
 						}else{
+              debugPrint('not');
 							return Center(child:CircularProgressIndicator());
 						}
 					}

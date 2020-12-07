@@ -4,6 +4,8 @@ import 'dart:io';
 import 'dart:async';
 import 'package:artist4u/const.dart';
 import 'package:artist4u/modals/artistbio_modal.dart';
+import 'package:artist4u/screens/manage_artist/manage_artist_content.dart';
+import 'package:artist4u/screens/manage_artist/manage_artist_page.dart';
 import 'package:artist4u/services/post_artistbio.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chewie/chewie.dart';
@@ -1499,16 +1501,28 @@ class _ArtistFormState extends State<ArtistForm> {
 								)
         						// ignore: missing_return
 								.then((ArtistBioModal value){
-									debugPrint(artist_type.text);
+									debugPrint(value.toString());
+									if(value==null){
+										showDialog(
+											barrierDismissible: true,
+											context: context,  
+											builder: (BuildContext context) {  
+												return AlertDialog(content: Text("Something went wrong or couldnt get your info to server"),);
+											}
+										);
+									}
 									uploadimage(_profileimage,'profile',artist_type.text,value.id);
 									uploadimage(_proofimage,'idproof',artist_type.text,value.id);
 									uploadgallary(filecontroller,artist_type.text,value.id);
 								});
 								setState(() {
 								  _artistBioModal=artistbio;
+								  
 								//   var artistid=artistbio.id.toString();
 								//   uploadimage(_profileimage,artist_type.text,artistid);
 								});
+								debugPrint(_artistBioModal.toString());
+								Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManageArtistPage()), ModalRoute.withName('/home'));
 							},
 							child: Text(
 								'Submit',

@@ -78,7 +78,7 @@ class PostArtistBio{
 			});
 			if (response.statusCode == 200) {
 				var jsonResponse = json.decode(response.body);
-        debugPrint('$jsonResponse');
+        //debugPrint('$jsonResponse');
         SharedPreferences userdata = await SharedPreferences.getInstance();
         userdata.setBool('isartist', true);
         userdata.setString('artistid',jsonResponse['_id']);
