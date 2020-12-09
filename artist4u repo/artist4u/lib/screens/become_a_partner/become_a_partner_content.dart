@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../const.dart';
 
@@ -543,16 +544,18 @@ class _PartnerFormState extends State<PartnerForm> {
 								)
         // ignore: missing_return
 								.then((PostPartnerBioModal value){
-										// debugPrint(value.toString());
-										uploadimage(_profileimage,'profile',"5f834cd904d3662828e79622");
-										uploadimage(_proofimage,'idproof',"5f834cd904d3662828e79622");
+                    // debugPrint(value.toString());
+										// debugPrint('inside then');
+										uploadimage(_profileimage,'profile',value.partnerid);
+										uploadimage(_proofimage,'idproof',value.partnerid);
 									// uploadimage(_proofimage,'idproof',artist_type.text,value.id);
 									// uploadgallary(filecontroller,artist_type.text,value.id);
-								}).then((value){
+                  if(value!=null){
                     Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManagePartnerPage()), ModalRoute.withName('/home'));
-                });
+                    }
+								});
 								setState(() {
-                  debugPrint("asd");
+                  //debugPrint("asd");
 								//   _artistBioModal=artistbio;
 								//   var artistid=artistbio.id.toString();
 								//   uploadimage(_profileimage,artist_type.text,artistid);
@@ -581,14 +584,30 @@ class VerticalSpace extends StatelessWidget{
 	}
 }
 
-void uploadimage(File image,String type,String userid) async{
-	var url='http://$ip:3000/partner/addpartner/$type/$userid';
+void uploadimage(File image,String type,String partnerid) async{
+  // debugPrint('inside upload image');
+  Map<String,dynamic> userdata;
+  userdata=await getUserData();
+
+  // debugPrint('$type');
+	var url='http://$ip:3000/partner/addpartner/$type/$partnerid';
+  debugPrint(url);
 	var request = http.MultipartRequest('PATCH',Uri.parse(url));
 	request.files.add(await http.MultipartFile.fromPath("$type", image.path));
-	request.fields['userid']='$userid';
+	request.fields['userid']="$partnerid";
 	request.headers.addAll({
 		'Content-type':'multipart/form-data',
-		"Authorization":"bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJAZ21haWwuY29tIiwiaWQiOiI1ZjgzNGNkOTA0ZDM2NjI4MjhlNzk2MjIiLCJwaG9uZSI6Ijk5OTA1MDA0MTUiLCJpYXQiOjE2MDI1ODgyMDksImV4cCI6MTYwMjYwMjYwOX0.PHLZzrdV1J10G5FKWiKmPgwqVliFzuQgdA73NV6hI_0"
+		"Authorization":"bearer ${userdata['token']}"
 	});
 	request.send();		
 }
+
+Future<Map<String,dynamic>> getUserData() async{
+	SharedPreferences userdata=await SharedPreferences.getInstance();
+	Map<String,dynamic> user={
+		"token":userdata.getString('token'),
+		"_id":userdata.getString('_id'),
+	};
+	// await userdata.clear();
+	return user;
+} 

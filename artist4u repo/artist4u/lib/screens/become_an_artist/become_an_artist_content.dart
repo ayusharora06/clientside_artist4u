@@ -1501,8 +1501,14 @@ class _ArtistFormState extends State<ArtistForm> {
 								)
         						// ignore: missing_return
 								.then((ArtistBioModal value){
-									debugPrint(value.toString());
-									if(value==null){
+									// debugPrint(value.toString());
+									uploadimage(_profileimage,'profile',artist_type.text,value.id);
+									uploadimage(_proofimage,'idproof',artist_type.text,value.id);
+									uploadgallary(filecontroller,artist_type.text,value.id);
+                  if(value!=null){
+                    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManageArtistPage()), ModalRoute.withName('/home'));
+                    }
+                    if(value==null){
 										showDialog(
 											barrierDismissible: true,
 											context: context,  
@@ -1511,18 +1517,15 @@ class _ArtistFormState extends State<ArtistForm> {
 											}
 										);
 									}
-									uploadimage(_profileimage,'profile',artist_type.text,value.id);
-									uploadimage(_proofimage,'idproof',artist_type.text,value.id);
-									uploadgallary(filecontroller,artist_type.text,value.id);
-								});
+                });
 								setState(() {
 								  _artistBioModal=artistbio;
 								  
 								//   var artistid=artistbio.id.toString();
 								//   uploadimage(_profileimage,artist_type.text,artistid);
 								});
-								debugPrint(_artistBioModal.toString());
-								Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManageArtistPage()), ModalRoute.withName('/home'));
+								//(_artistBioModal.toString());
+								//Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManageArtistPage()), ModalRoute.withName('/home'));
 							},
 							child: Text(
 								'Submit',

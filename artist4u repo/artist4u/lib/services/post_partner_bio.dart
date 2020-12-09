@@ -51,14 +51,17 @@ class PostPartnerBio{
           "IFSC":IFSC
         }
       );
+      // debugPrint(response.statusCode.toString());
 			if (response.statusCode == 201) {
+        // debugPrint('asd');
+        
 				var jsonResponse = json.decode(response.body);
+        // debugPrint(jsonResponse.toString());
         SharedPreferences userdata = await SharedPreferences.getInstance();
         userdata.setBool('ispartner', true);
-        userdata.setBool('partnerid', jsonResponse['partnerid']);
-				// debugPrint(jsonResponse.toString());
+        userdata.setString('partnerid', jsonResponse['partnerid']);
 				postPartnerBioModal = PostPartnerBioModal.fromJson(jsonResponse);
-				// debugPrint("model"+artistTypeModel.toString());
+				// debugPrint(postPartnerBioModal.toString());
 			}
       if (response.statusCode == 500) {
     // ignore: unused_local_variable
