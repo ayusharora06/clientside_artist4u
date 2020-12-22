@@ -1505,10 +1505,19 @@ class _ArtistFormState extends State<ArtistForm> {
 									uploadimage(_profileimage,'profile',artist_type.text,value.id);
 									uploadimage(_proofimage,'idproof',artist_type.text,value.id);
 									uploadgallary(filecontroller,artist_type.text,value.id);
-                  if(value!=null){
-                    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManageArtistPage()), ModalRoute.withName('/home'));
-                    }
-                    if(value==null){
+									if(value!=null){
+										Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManageArtistPage()), ModalRoute.withName('/home'));
+										showDialog(
+												barrierDismissible: true,
+												context: context,  
+												builder: (BuildContext context) {  
+													return AlertDialog(
+														content:Text("Congratulation on becoming an Artist")
+													);
+												}
+											);
+										}
+									if(value==null){
 										showDialog(
 											barrierDismissible: true,
 											context: context,  
@@ -1517,7 +1526,7 @@ class _ArtistFormState extends State<ArtistForm> {
 											}
 										);
 									}
-                });
+								});
 								setState(() {
 								  _artistBioModal=artistbio;
 								  

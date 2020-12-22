@@ -551,6 +551,15 @@ class _PartnerFormState extends State<PartnerForm> {
 									// uploadimage(_proofimage,'idproof',artist_type.text,value.id);
 									// uploadgallary(filecontroller,artist_type.text,value.id);
                   if(value!=null){
+                    showDialog(
+						barrierDismissible: true,
+						context: context,  
+						builder: (BuildContext context) {  
+							return AlertDialog(
+								content:Text("Congratulation on becoming our Partner")
+							);
+						}
+					);
                     Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => ManagePartnerPage()), ModalRoute.withName('/home'));
                     }
 								});

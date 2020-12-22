@@ -616,7 +616,7 @@ class Price extends StatelessWidget{
 				child: Align(
 					alignment: Alignment.bottomRight,
 					child: Text(
-						unifiedprice=='true'?single:multiple[0].toString(),
+						unifiedprice=='true'?single:multiple.toString(),
 						style: TextStyle(
 							color:Colors.black,
 							//fontWeight: FontWeight.bold,

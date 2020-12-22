@@ -1,5 +1,6 @@
 import 'package:artist4u/modals/post_event.dart';
 import 'package:artist4u/modals/verify_refer_modal.dart';
+import 'package:artist4u/screens/home_screen/home_screen.dart';
 import 'package:artist4u/services/post_event.dart';
 import 'package:artist4u/services/post_verify_refer.dart';
 import 'package:flutter/cupertino.dart';
@@ -523,8 +524,25 @@ class _BookNowContentState extends State<BookNowContent> {
 																verifiername=result.name;
 															  	// print(result);
 															});
+															showDialog(
+																barrierDismissible: true,
+																context: context,  
+																builder: (BuildContext context) {  
+																	return AlertDialog(
+																		content:Text("Refer code from: $verifiername")
+																	);
+																}
+															);
 														}else{
-															debugPrint('null');
+															showDialog(
+																barrierDismissible: true,
+																context: context,  
+																builder: (BuildContext context) {  
+																	return AlertDialog(
+																		content:Text('Invalid code')
+																	);
+																}
+															);
 														}
 													});
 													setState(() {
@@ -592,72 +610,110 @@ class _BookNowContentState extends State<BookNowContent> {
 								height: MediaQuery.of(context).size.height*0.075,
 								minWidth: MediaQuery.of(context).size.width*0.4,
 								child: FlatButton(
-									// onPressed: (){
-									// 	showDialog(
-									// 		barrierDismissible: true,
-									// 		context: context,  
-									// 		builder: (BuildContext context) {  
-									// 			return AlertDialog(
-									// 				content:Column(
-									// 					children: [
-									// 						// Text('Confirm your Order'),
-									// 						// ArtistImage(widget.artistname),
-									// 						// Text(widget.artistname),
-									// 						// selectedevent!=null?Text(selectedevent):Text(''),
-									// 						// _selectedGathering!=null?Text(_selectedGathering):Text(''),
-									// 						// for(var i in eventsdate)
-									// 						// 	Container(
-									// 						// 		child: Column(
-									// 						// 			children: [
-									// 						// 				Center(child: Text('Day '+i['day'].toString())),
+									onPressed: (){
+										showDialog(
+											barrierDismissible: true,
+											context: context,  
+											builder: (BuildContext context) {  
+												return AlertDialog(
+													content:Container(
+														height: MediaQuery.of(context).size.height*0.5,
+														width: MediaQuery.of(context).size.height*0.25,
+														child: Column(
+															children: [
+																Text('Confirm your Order'),
+																ArtistImage(widget.artistname),
+																Text(widget.artistname),
+																selectedevent!=null?Text(selectedevent):Text(''),
+																_selectedGathering!=null?Text(_selectedGathering):Text(''),
+																for(var i in eventsdate)
+																	Container(
+																		child: Column(
+																			children: [
+																				Center(child: Text('Day '+i['day'].toString())),
 
-									// 						// 				i['date']!=null?Text("${i['date']['day']}/${i['date']['month']}/${i['date']['year']}"):Text(''),
+																				i['date']!=null?Text("${i['date']['day']}/${i['date']['month']}/${i['date']['year']}"):Text(''),
 
-									// 						// 				i['starttime']!=null?Text("${i['starttime']['hour']}hrs ${i['starttime']['minute']}"):Text(''),
+																				i['starttime']!=null?Text("${i['starttime']['hour']}hrs ${i['starttime']['minute']}"):Text(''),
 
-									// 						// 				i['duration']!=null?Text("${i['duration']}"):Text('')
-									// 						// 			],
-									// 						// 		),
-									// 						// 	),
-									// 						// Text('${(price*eventprice*gatheringprice).toString()}'),
-									// 						RaisedButton(
-									// 							color: Color.fromRGBO(104, 178, 160, 1),
-									// 							child: Text(
-									// 								'Submit',
-									// 								style: TextStyle(
-									// 									color: Colors.white
-									// 								),
-									// 							),
-									// 						),
-															
-									// 					],
-									// 				),
-									// 			);
-									// 		}
-									// 	);
-									// },
-									onPressed: () async{
-										debugPrint(eventsdate.toString());
-										// ignore: unused_local_variable
-										final PostEventmodal event=await PostEvent().postEvent(
-											widget.artistname,
-											widget.artisttype,
-											selectedevent.toString(),
-											_selectedGathering.toString(),
-											eventsdate,
-											location.text,
-											requirements.text,
-											refercode.text,
-											'${(price*eventprice*gatheringprice).toString()}',
-											referedby,
-											partnerid
-          // ignore: missing_return
-										).then((PostEventmodal result){
-											debugPrint(result.toString());
-										});
-										setState(() {
-										});
+																				i['duration']!=null?Text("${i['duration']}"):Text('')
+																			],
+																		),
+																	),
+																Text('${(price*eventprice*gatheringprice).toString()}'),
+																RaisedButton(
+																	color: Color.fromRGBO(104, 178, 160, 1),
+																	child: Text(
+																		'Submit',
+																		style: TextStyle(
+																			color: Colors.white
+																		),
+																	),
+																	onPressed: () async{
+																	// debugPrint(eventsdate.toString());
+																	// ignore: unused_local_variable
+																	final PostEventmodal event=await PostEvent().postEvent(
+																		widget.artistname,
+																		widget.artisttype,
+																		selectedevent.toString(),
+																		_selectedGathering.toString(),
+																		eventsdate,
+																		location.text,
+																		requirements.text,
+																		refercode.text,
+																		'${(price*eventprice*gatheringprice).toString()}',
+																		referedby,
+																		partnerid
+																		// ignore: missing_return
+																	).then((PostEventmodal result){
+																		if(result !=null){
+																			Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => HomeScreen()),ModalRoute.withName('/home'));
+																			showDialog(
+																				barrierDismissible: true,
+																				context: context,  
+																				builder: (BuildContext context) {  
+																					return AlertDialog(
+																						content:Text('Artist has been Booked')
+																					);
+																				}
+																			);
+																		}
+																		// debugPrint(result.toString());
+																	});
+																	setState(() {
+																	});
+																},
+																),
+																
+															],
+														),
+													),
+												);
+											}
+										);
 									},
+									// onPressed: () async{
+									// 	debugPrint(eventsdate.toString());
+									// 	// ignore: unused_local_variable
+									// 	final PostEventmodal event=await PostEvent().postEvent(
+									// 		widget.artistname,
+									// 		widget.artisttype,
+									// 		selectedevent.toString(),
+									// 		_selectedGathering.toString(),
+									// 		eventsdate,
+									// 		location.text,
+									// 		requirements.text,
+									// 		refercode.text,
+									// 		'${(price*eventprice*gatheringprice).toString()}',
+									// 		referedby,
+									// 		partnerid
+          							// 		// ignore: missing_return
+									// 	).then((PostEventmodal result){
+									// 		debugPrint(result.toString());
+									// 	});
+									// 	setState(() {
+									// 	});
+									// },
 									color: Color.fromRGBO(104, 178, 160, 1),
 									child: Text(
 										'Pay Now',
